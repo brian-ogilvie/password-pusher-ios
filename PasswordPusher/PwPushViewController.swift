@@ -12,8 +12,8 @@ class PwPushViewController: UIViewController {
     
     //MARK:- Storyboard
     
-    @IBOutlet weak var pswdInput: UITextField! {
-        didSet { pswdInput.delegate = self }
+    @IBOutlet weak var password: UITextField! {
+        didSet { password.delegate = self }
     }
     @IBOutlet weak var timeSlider: UISlider!
     @IBOutlet weak var timeLbl: UILabel!
@@ -57,14 +57,14 @@ class PwPushViewController: UIViewController {
     
     //MARK:- performPush
     private func performPush() {
-        guard pswdInput!.text != nil && pswdInput!.text! != "" else {
+        guard password!.text != nil && password!.text! != "" else {
             self.present(showBasicAlert(message: "Please enter a password"), animated: true, completion: nil)
             return
         }
         
         toggleSpinner(on: true)
         
-        let myPassword = pswdInput!.text
+        let myPassword = password!.text
         guard let url = URL(string: URLs.placeholder) else {
             print("Unable to create url")
             return
@@ -198,7 +198,7 @@ extension PwPushViewController: UITextFieldDelegate {
         return true
     }
     @objc func dismissKeyboard() {
-        pswdInput.resignFirstResponder()
+        password.resignFirstResponder()
     }
 }
 
