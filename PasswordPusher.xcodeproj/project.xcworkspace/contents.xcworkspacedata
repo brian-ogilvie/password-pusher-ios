@@ -1,6 +1,186 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
+   <Group
+      location = "group:1Password.xcassets"
+      name = "1Password.xcassets">
+      <FileRef
+         location = "group:onepassword-toolbar.pdf">
+      </FileRef>
+      <FileRef
+         location = "group:onepassword-toolbar-light.pdf">
+      </FileRef>
+      <FileRef
+         location = "group:onepassword-extension~regular.pdf">
+      </FileRef>
+      <Group
+         location = "group:onepassword-extension.imageset"
+         name = "onepassword-extension.imageset">
+         <FileRef
+            location = "group:onepassword-extension@3x~compact.png">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-extension~regular.png">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-extension@2x~compact.png">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-extension~compact.png">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-extension@2x~regular.png">
+         </FileRef>
+         <FileRef
+            location = "group:Contents.json">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:onepassword-toolbar.imageset"
+         name = "onepassword-toolbar.imageset">
+         <FileRef
+            location = "group:onepassword-toolbar.png">
+         </FileRef>
+         <FileRef
+            location = "group:Contents.json">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-toolbar@2x.png">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-toolbar@3x.png">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:onepassword-navbar.pdf">
+      </FileRef>
+      <FileRef
+         location = "group:onepassword-extension~compact.pdf">
+      </FileRef>
+      <FileRef
+         location = "group:onepassword-navbar-light.pdf">
+      </FileRef>
+      <FileRef
+         location = "group:onepassword-extension-light~compact.pdf">
+      </FileRef>
+      <FileRef
+         location = "group:onepassword-button-light.pdf">
+      </FileRef>
+      <FileRef
+         location = "group:onepassword-button.pdf">
+      </FileRef>
+      <Group
+         location = "group:onepassword-navbar.imageset"
+         name = "onepassword-navbar.imageset">
+         <FileRef
+            location = "group:onepassword-navbar@2x.png">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-navbar.png">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-navbar@3x.png">
+         </FileRef>
+         <FileRef
+            location = "group:Contents.json">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:onepassword-navbar-light.imageset"
+         name = "onepassword-navbar-light.imageset">
+         <FileRef
+            location = "group:onepassword-navbar-light@2x.png">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-navbar-light@3x.png">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-navbar-light.png">
+         </FileRef>
+         <FileRef
+            location = "group:Contents.json">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:onepassword-extension-light.imageset"
+         name = "onepassword-extension-light.imageset">
+         <FileRef
+            location = "group:onepassword-extension-light~compact.png">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-extension-light@2x~compact.png">
+         </FileRef>
+         <FileRef
+            location = "group:Contents.json">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-extension-light@3x~compact.png">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-extension-light~regular.png">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-extension-light@2x~regular.png">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:onepassword-button-light.imageset"
+         name = "onepassword-button-light.imageset">
+         <FileRef
+            location = "group:onepassword-button-light@2x.png">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-button-light@3x.png">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-button-light.png">
+         </FileRef>
+         <FileRef
+            location = "group:Contents.json">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:onepassword-extension-light~regular.pdf">
+      </FileRef>
+      <Group
+         location = "group:onepassword-toolbar-light.imageset"
+         name = "onepassword-toolbar-light.imageset">
+         <FileRef
+            location = "group:onepassword-toolbar-light.png">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-toolbar-light@2x.png">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-toolbar-light@3x.png">
+         </FileRef>
+         <FileRef
+            location = "group:Contents.json">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:onepassword-button.imageset"
+         name = "onepassword-button.imageset">
+         <FileRef
+            location = "group:Contents.json">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-button.png">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-button@3x.png">
+         </FileRef>
+         <FileRef
+            location = "group:onepassword-button@2x.png">
+         </FileRef>
+      </Group>
+   </Group>
+   <FileRef
+      location = "group:OnePasswordExtension.h">
+   </FileRef>
+   <FileRef
+      location = "group:OnePasswordExtension.m">
+   </FileRef>
    <FileRef
       location = "self:PasswordPusher.xcodeproj">
    </FileRef>

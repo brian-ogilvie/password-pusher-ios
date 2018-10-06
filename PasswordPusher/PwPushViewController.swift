@@ -15,6 +15,14 @@ class PwPushViewController: UIViewController {
     @IBOutlet weak var password: UITextField! {
         didSet { password.delegate = self }
     }
+    @IBOutlet weak var onePasswordBtn: UIButton!
+    @IBAction func findLoginFrom1Password(_ sender: UIButton) {
+        OnePasswordExtension.shared().findLogin(forURLString: "www.pwpush.com", for: self, sender: sender) { (loginDictionary, error) in
+            if let loginDictionary = loginDictionary {
+                self.password.text = loginDictionary[AppExtensionPasswordKey] as? String ?? "Can't find it";
+            }
+        }
+    }
     @IBOutlet weak var timeSlider: UISlider!
     @IBOutlet weak var timeLbl: UILabel!
     @IBAction func timeSliderChanged(_ sender: UISlider) {
@@ -177,6 +185,10 @@ class PwPushViewController: UIViewController {
         }
     }
     
+    private func checkOnePswdAvailable() {
+        onePasswordBtn.isHidden = (false == OnePasswordExtension.shared().isAppExtensionAvailable())
+    }
+    
     private func addBgTapRecognizer() {
         //Calls func to dismiss keyboard and reveal rest of the screen when background is tapped
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
@@ -189,6 +201,7 @@ class PwPushViewController: UIViewController {
         restoreDefaults()
         displaySliderInfo()
         addBgTapRecognizer()
+//        checkOnePswdAvailable();
     }
 }
 
