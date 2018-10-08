@@ -73,19 +73,22 @@ class PwPushViewController: UIViewController {
         toggleSpinner(on: true)
         
         let myPassword = password!.text
-        guard let url = URL(string: URLs.placeholder) else {
+        guard let url = URL(string: URLs.pwPushAPI) else {
             print("Unable to create url")
             return
         }
-        let parameters = ["password[payload]": myPassword, "password[expire_after_days]": String(timeToExpire), "password[expire_after_views]": String(viewsToExpire), "password[deletable_by_viewer]": String(optionalDelete)]
+        let parameters = ["payload": myPassword, "expire_after_days": String(timeToExpire), "expire_after_views": String(viewsToExpire), "deletable_by_viewer": String(optionalDelete)]
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
+
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
         guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else {
             print("Unable to create httpBody")
             return
         }
+        print("httpBody: \(httpBody)");
         request.httpBody = httpBody
 
         let session = URLSession.shared
@@ -95,53 +98,21 @@ class PwPushViewController: UIViewController {
             }
             if let data = data {
                 
-                //TODO: move this into do block when POST request is working
-                let urlToEmail = "https://www.thisdoesntworkyet.com/tick-tock"
-                DispatchQueue.main.async {
-                    self.toggleSpinner(on: false)
-                    self.presentMailComposeVC(urlToEmail: urlToEmail)
-                }
-                
                 do {
-                    let json = try JSONSerialization.jsonObject(with: data, options: [])
-                    print("JSON Data: \(json)")
+                    let pwPushObject = try JSONDecoder().decode(PwPushObject.self, from: data)
+                    let urlToEmail = URLs.pwPushPrefix + pwPushObject.urlToken
+                    DispatchQueue.main.async {
+                        self.toggleSpinner(on: false)
+                        self.presentMailComposeVC(urlToEmail: urlToEmail)
+                        //TODO: add success message and clear form
+                    }
                 } catch {
+                    //TODO: handle errors
                     print("My Error: \(error)")
                 }
             }
         }.resume()
         saveUserDefaults()
-        
-//        let parameters = ["password[payload]": "myPassword", "password[expire_after_days]": "3", "password[expire_after_views]": "10", "password[deletable_by_viewer]": "true"]
-//
-//        var request = URLRequest(url: URL(string: URLs.placeholder)!)
-//        request.httpMethod = "POST"
-//        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-//
-//        if let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) {
-//
-//            request.httpBody = httpBody
-//
-//            let session = URLSession.shared
-//            session.dataTask(with: request) { (data, response, error) in
-//                if let response = response {
-//                    print(response)
-//                    // Gives me a status code of 200
-//                }
-//                if let data = data {
-//                    do {
-//                        let json = try JSONSerialization.jsonObject(with: data, options: [])
-//                        print(json)
-//                        // I want to parse out the resulting URL to send to clients
-//                        // Just like you do in the Javascript alert in the wiki example
-//                    } catch {
-//                        print("My Error: \(error)")
-//                        // I get an error
-//                        // data is actually a full HTML page, not parsable JSON
-//                    }
-//                }
-//            }.resume()
-//        }
     }
     
     private func restoreDefaults() {
@@ -230,7 +201,8 @@ private enum UserDefaultsKeys: String {
 }
 
 private struct URLs {
-    static let pwPush = "https://pwpush.com/p.json"
+    static let pwPushAPI = "https://pwpush.com/p.json"
+    static let pwPushPrefix = "https://pwpush.com/p/"
     static let placeholder = "https://jsonplaceholder.typicode.com/todos/1/posts"
 }
 

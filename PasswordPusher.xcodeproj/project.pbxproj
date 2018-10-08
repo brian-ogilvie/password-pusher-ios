@@ -11,6 +11,7 @@
 		851FF21121685A4C0016462A /* 1Password.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 851FF20F21685A4C0016462A /* 1Password.xcassets */; };
 		8542AC6C216304CD002845CF /* PwPushViewController+MessageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8542AC6B216304CD002845CF /* PwPushViewController+MessageUI.swift */; };
 		8542AC6E216317EB002845CF /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8542AC6D216317EB002845CF /* Utilities.swift */; };
+		857D484D216B77BB00C639FC /* PwPushObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D484C216B77BB00C639FC /* PwPushObject.swift */; };
 		85DF79B4216290CB008BA272 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85DF79B3216290CB008BA272 /* Colors.xcassets */; };
 		85F0E409215DC34500D01FD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F0E408215DC34500D01FD4 /* AppDelegate.swift */; };
 		85F0E40B215DC34500D01FD4 /* PwPushViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F0E40A215DC34500D01FD4 /* PwPushViewController.swift */; };
@@ -26,6 +27,7 @@
 		851FF20F21685A4C0016462A /* 1Password.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = 1Password.xcassets; sourceTree = "<group>"; };
 		8542AC6B216304CD002845CF /* PwPushViewController+MessageUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PwPushViewController+MessageUI.swift"; sourceTree = "<group>"; };
 		8542AC6D216317EB002845CF /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		857D484C216B77BB00C639FC /* PwPushObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwPushObject.swift; sourceTree = "<group>"; };
 		85DF79B3216290CB008BA272 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		85F0E405215DC34500D01FD4 /* PasswordPusher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PasswordPusher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F0E408215DC34500D01FD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 		85F0E41A215DC3DD00D01FD4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				857D484C216B77BB00C639FC /* PwPushObject.swift */,
 				851FF20F21685A4C0016462A /* 1Password.xcassets */,
 				851FF20D21685A4B0016462A /* OnePasswordExtension.h */,
 				851FF20E21685A4B0016462A /* OnePasswordExtension.m */,
@@ -168,6 +171,7 @@
 				85F0E40B215DC34500D01FD4 /* PwPushViewController.swift in Sources */,
 				8542AC6C216304CD002845CF /* PwPushViewController+MessageUI.swift in Sources */,
 				851FF21021685A4C0016462A /* OnePasswordExtension.m in Sources */,
+				857D484D216B77BB00C639FC /* PwPushObject.swift in Sources */,
 				8542AC6E216317EB002845CF /* Utilities.swift in Sources */,
 				85F0E409215DC34500D01FD4 /* AppDelegate.swift in Sources */,
 			);
