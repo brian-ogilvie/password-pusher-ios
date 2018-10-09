@@ -88,14 +88,13 @@ class PwPushViewController: UIViewController {
             print("Unable to create httpBody")
             return
         }
-        print("httpBody: \(httpBody)");
         request.httpBody = httpBody
 
         let session = URLSession.shared
         session.dataTask(with: request) { (data, response, error) in
-            if let response = response {
+            /*if let response = response {
                 print("response: \(response)")
-            }
+            } */
             if let data = data {
                 
                 do {
@@ -104,11 +103,10 @@ class PwPushViewController: UIViewController {
                     DispatchQueue.main.async {
                         self.toggleSpinner(on: false)
                         self.presentMailComposeVC(urlToEmail: urlToEmail)
-                        //TODO: add success message and clear form
                     }
                 } catch {
                     //TODO: handle errors
-                    print("My Error: \(error)")
+                    print("Session Error: \(error)")
                 }
             }
         }.resume()
@@ -116,6 +114,7 @@ class PwPushViewController: UIViewController {
     }
     
     private func restoreDefaults() {
+        password!.text = nil
         //if settings have been saved before, restore from UserDefaults
         if UserDefaults.standard.bool(forKey: UserDefaultsKeys.saveDefaults.rawValue) == true {
             viewsSlider.setValue(UserDefaults.standard.float(forKey: UserDefaultsKeys.viewsToExpire.rawValue), animated: true)
@@ -164,6 +163,17 @@ class PwPushViewController: UIViewController {
         //Calls func to dismiss keyboard and reveal rest of the screen when background is tapped
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         self.view.addGestureRecognizer(tap)
+    }
+    
+    // called after mail VC is dismissed
+    func mailFinished(sent: Bool) {
+        if sent {
+            //TODO: present success message without alert
+            print("Mail sent!")
+            restoreDefaults()
+        } else {
+            present(showBasicAlert(message: "Mail could not be sent."), animated: true, completion: nil)
+        }
     }
 
     //MARK:- VCLC

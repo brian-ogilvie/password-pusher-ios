@@ -43,6 +43,12 @@ extension PwPushViewController: MFMailComposeViewControllerDelegate {
     
     //Delegate method
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.presentingViewController?.dismiss(animated: true, completion: nil)
+        controller.presentingViewController?.dismiss(animated: true, completion: {
+            if result == .sent {
+                self.mailFinished(sent: true)
+            } else if result == MFMailComposeResult.failed {
+                self.mailFinished(sent: false)
+            }
+        })
     }
 }
