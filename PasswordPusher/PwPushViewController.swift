@@ -93,12 +93,17 @@ class PwPushViewController: UIViewController {
             return
         }
         request.httpBody = httpBody
+        request.timeoutInterval = 5
 
         let session = URLSession.shared
         session.dataTask(with: request) { (data, response, error) in
-            /*if let response = response {
-                print("response: \(response)")
-            } */
+            if response == nil {
+                DispatchQueue.main.async {
+                    self.toggleSpinner(on: false)
+                    let message = "Unable to get response from server."
+                    self.present(showBasicAlert(message: message), animated: true)
+                }
+            }
             if let data = data {
                 
                 do {
@@ -108,9 +113,12 @@ class PwPushViewController: UIViewController {
                         self.toggleSpinner(on: false)
                         self.presentMailComposeVC(urlToEmail: urlToEmail)
                     }
-                } catch {
-                    //TODO: handle errors
-                    print("Session Error: \(error)")
+                } catch let sessionError {
+                    DispatchQueue.main.async {
+                        self.toggleSpinner(on: false)
+                        let message = String(describing: sessionError)
+                        self.present(showBasicAlert(message: message), animated: true)
+                    }
                 }
             }
         }.resume()
