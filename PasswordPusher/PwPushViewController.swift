@@ -23,16 +23,20 @@ class PwPushViewController: UIViewController {
             }
         }
     }
+    @IBOutlet weak var timeStackView: UIStackView!
     @IBOutlet weak var timeSlider: UISlider!
     @IBOutlet weak var timeLbl: UILabel!
     @IBAction func timeSliderChanged(_ sender: UISlider) {
         displaySliderInfo()
     }
+    @IBOutlet weak var viewsStackView: UIStackView!
     @IBOutlet weak var viewsSlider: UISlider!
     @IBOutlet weak var viewsLbl: UILabel!
     @IBAction func viewsSliderChanged(_ sender: UISlider) {
         displaySliderInfo()
     }
+    var expirationTxtField: UITextField?
+    
     @IBOutlet weak var optionalDeleteSwitch: UISwitch!
     @IBOutlet weak var saveDefaultsSwitch: UISwitch!
     @IBOutlet weak var pushButton: UIButton!
@@ -165,6 +169,39 @@ class PwPushViewController: UIViewController {
         self.view.addGestureRecognizer(tap)
     }
     
+    //Gesture recognizer for expiration labels
+    private func addLblTapRecognizer(to label: UILabel) {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(displayExpirationField(recognizer:)))
+        label.addGestureRecognizer(tap)
+    }
+    
+    //displays UITextField to enter expiration days or views
+    @objc private func displayExpirationField(recognizer: UITapGestureRecognizer) {
+        if let existingField = expirationTxtField {
+            existingField.endEditing(true)
+        }
+        if let sender = recognizer.view as? UILabel {
+            expirationTxtField = UITextField(frame: sender.frame)
+            expirationTxtField!.delegate = self
+            expirationTxtField!.backgroundColor = UIColor(named: "TextField BG")
+            expirationTxtField!.textAlignment = .center
+            expirationTxtField!.placeholder = sender == timeLbl ? "\(timeToExpire) Days" : "\(viewsToExpire) Views"
+            expirationTxtField!.keyboardType = .numberPad
+            //Tag says which slider to update on textFieldDidEndEditing
+            expirationTxtField!.tag = sender == timeLbl ? 1 : 2
+            expirationTxtField!.alpha = 0
+            view.addSubview(expirationTxtField!)
+            matchConstraints(of: expirationTxtField!, to: sender)
+            UIView.animate(withDuration: AnimationConstants.txtFieldFadeIn, animations: {
+                self.expirationTxtField!.alpha = 1
+            }) { (complete) in
+                if complete {
+                    self.expirationTxtField!.becomeFirstResponder()
+                }
+            }
+        }
+    }
+    
     // called after mail VC is dismissed
     func mailFinished(sent: Bool) {
         if sent {
@@ -182,17 +219,44 @@ class PwPushViewController: UIViewController {
         restoreDefaults()
         displaySliderInfo()
         addBgTapRecognizer()
+        addLblTapRecognizer(to: timeLbl)
+        addLblTapRecognizer(to: viewsLbl)
 //        checkOnePswdAvailable();
     }
 }
 
 extension PwPushViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == expirationTxtField {
+            let sliderToUpdate = textField.tag == 1 ? timeSlider : viewsSlider
+            if let textVal = textField.text, let numberVal = Int(textVal) {
+                sliderToUpdate?.setValue(Float(exactly: numberVal)!, animated: true)
+                displaySliderInfo()
+            }
+            deactivateConstraints(from: textField)
+            animateOffTxtField(textField)
+        }
+    }
+    
+    private func animateOffTxtField(_ textField: UITextField) {
+        UIView.animate(withDuration: AnimationConstants.txtFieldFadeIn, animations: {
+            textField.alpha = 0
+        }) { (complete) in
+            if complete {
+                textField.removeFromSuperview()
+            }
+        }
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-    @objc func dismissKeyboard() {
+    
+    //called when view background is tapped
+    @objc private func dismissKeyboard() {
         password.resignFirstResponder()
+        expirationTxtField?.resignFirstResponder()
     }
 }
 
@@ -214,5 +278,9 @@ private struct URLs {
     static let pwPushAPI = "https://pwpush.com/p.json"
     static let pwPushPrefix = "https://pwpush.com/p/"
     static let placeholder = "https://jsonplaceholder.typicode.com/todos/1/posts"
+}
+
+private struct AnimationConstants {
+    static let txtFieldFadeIn: TimeInterval = 0.5
 }
 
