@@ -222,6 +222,10 @@ class PwPushViewController: UIViewController {
         addLblTapRecognizer(to: timeLbl)
         addLblTapRecognizer(to: viewsLbl)
 //        checkOnePswdAvailable();
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }
 
