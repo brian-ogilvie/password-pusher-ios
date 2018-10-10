@@ -93,19 +93,16 @@ class PwPushViewController: UIViewController {
             return
         }
         request.httpBody = httpBody
-        request.timeoutInterval = 5
+        //TODO: add ability to cancel operation if long response time
 
         let session = URLSession.shared
         session.dataTask(with: request) { (data, response, error) in
             if response == nil {
                 DispatchQueue.main.async {
-                    self.toggleSpinner(on: false)
-                    let message = "Unable to get response from server."
-                    self.present(showBasicAlert(message: message), animated: true)
+                    self.handleSessionError("Unable to get response from server.")
                 }
             }
             if let data = data {
-                
                 do {
                     let pwPushObject = try JSONDecoder().decode(PwPushObject.self, from: data)
                     let urlToEmail = URLs.pwPushPrefix + pwPushObject.urlToken
@@ -115,14 +112,17 @@ class PwPushViewController: UIViewController {
                     }
                 } catch let sessionError {
                     DispatchQueue.main.async {
-                        self.toggleSpinner(on: false)
-                        let message = String(describing: sessionError)
-                        self.present(showBasicAlert(message: message), animated: true)
+                        self.handleSessionError(String(describing: sessionError))
                     }
                 }
             }
         }.resume()
         saveUserDefaults()
+    }
+    
+    private func handleSessionError(_ message: String) {
+        toggleSpinner(on: false)
+        self.present(showBasicAlert(message: message), animated: true)
     }
     
     private func restoreDefaults() {
