@@ -213,11 +213,47 @@ class PwPushViewController: UIViewController {
     // called after mail VC is dismissed
     func mailFinished(sent: Bool) {
         if sent {
-            //TODO: present success message without alert
-            print("Mail sent!")
+            displayMailSuccessMsg()
             restoreDefaults()
         } else {
             present(showBasicAlert(message: "Mail could not be sent."), animated: true, completion: nil)
+        }
+    }
+    
+    //displays a success message after sending email
+    func displayMailSuccessMsg() {
+        print("displayMailSuccessMsg")
+        let successLbl = UILabel(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize.zero))
+        successLbl.backgroundColor = UIColor(named: "Push Button BG")
+        successLbl.textColor = UIColor(named: "Body Text")
+        successLbl.font = UIFont.preferredFont(forTextStyle: .body).withSize(24)
+        successLbl.numberOfLines = 0
+        successLbl.textAlignment = .center
+        successLbl.text = "Your password has been sent!"
+        successLbl.alpha = 0
+        
+        successLbl.translatesAutoresizingMaskIntoConstraints = false
+        let msgCenterX = successLbl.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        let msgCenterY = successLbl.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50)
+        let msgWidth = successLbl.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1)
+        let msgConstraints = [msgCenterX, msgCenterY, msgWidth]
+        
+        view.addSubview(successLbl)
+        NSLayoutConstraint.activate(msgConstraints)
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            successLbl.alpha = 1
+        }) { (complete) in
+            if complete {
+                UIView.animateKeyframes(withDuration: 0.5, delay: 1, options: [], animations: {
+                    successLbl.alpha = 0
+                }, completion: { (complete) in
+                    if complete {
+                        NSLayoutConstraint.deactivate(msgConstraints)
+                        successLbl.removeFromSuperview()
+                    }
+                })
+            }
         }
     }
 
