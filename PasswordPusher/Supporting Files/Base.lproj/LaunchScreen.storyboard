@@ -9,11 +9,6 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="BigCaslon.ttf">
-            <string>BigCaslon-Medium</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="EHf-IW-A2E">
@@ -23,28 +18,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tel-fI-C5i">
-                                <rect key="frame" x="139.5" y="233.5" width="96" height="50.5"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pw" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mf0-vz-5eg">
-                                        <rect key="frame" x="0.0" y="0.0" width="59" height="50.5"/>
-                                        <fontDescription key="fontDescription" name="BigCaslon-Medium" family="Big Caslon" pointSize="42"/>
-                                        <color key="textColor" name="Header Text"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="⇧" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yJI-8S-rxp">
-                                        <rect key="frame" x="59" y="0.0" width="37" height="50.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                        <color key="textColor" name="Body Text"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchIcon" highlightedImage="launchIcon" translatesAutoresizingMaskIntoConstraints="NO" id="NSP-M5-dcr">
+                                <rect key="frame" x="87.5" y="183.5" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="ECM-FA-x9v"/>
+                                    <constraint firstAttribute="width" constant="200" id="RcS-1s-keX"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" name="Background"/>
                         <constraints>
-                            <constraint firstItem="tel-fI-C5i" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="0hx-hn-h9V"/>
-                            <constraint firstItem="tel-fI-C5i" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-75" id="kel-Lv-xDA"/>
+                            <constraint firstItem="NSP-M5-dcr" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-50" id="8DC-fJ-kyx"/>
+                            <constraint firstItem="NSP-M5-dcr" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="ddh-e5-5PW"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -55,14 +40,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="launchIcon" width="400" height="400"/>
         <namedColor name="Background">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="Body Text">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="Header Text">
-            <color red="1" green="1" blue="0.32941176470588235" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>
