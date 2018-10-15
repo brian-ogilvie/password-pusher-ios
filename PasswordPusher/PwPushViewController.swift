@@ -226,28 +226,32 @@ class PwPushViewController: UIViewController {
         let successLbl = UILabel(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize.zero))
         successLbl.backgroundColor = UIColor(named: "Push Button BG")
         successLbl.textColor = UIColor(named: "Body Text")
-        successLbl.font = UIFont.preferredFont(forTextStyle: .body).withSize(24)
+        successLbl.font = UIFont.preferredFont(forTextStyle: .body).withSize(Constants.successMsgFontSize)
         successLbl.numberOfLines = 0
         successLbl.textAlignment = .center
-        successLbl.text = "Your password has been sent!"
+        successLbl.text = Strings.successMsg
         successLbl.alpha = 0
         
         successLbl.translatesAutoresizingMaskIntoConstraints = false
         let msgCenterX = successLbl.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        let msgCenterY = successLbl.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50)
+        let msgCenterY = successLbl.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: Constants.successMsgYConstant)
         let msgWidth = successLbl.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1)
         let msgConstraints = [msgCenterX, msgCenterY, msgWidth]
         
         view.addSubview(successLbl)
         NSLayoutConstraint.activate(msgConstraints)
         
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: AnimationConstants.successMsgFade, animations: {
             successLbl.alpha = 1
         }) { (complete) in
             if complete {
-                UIView.animateKeyframes(withDuration: 0.5, delay: 1, options: [], animations: {
-                    successLbl.alpha = 0
-                }, completion: { (complete) in
+                UIView.animateKeyframes(
+                    withDuration: AnimationConstants.successMsgFade,
+                    delay: AnimationConstants.successMsgLinger, options: [],
+                    animations: {
+                        successLbl.alpha = 0
+                    },
+                    completion: { (complete) in
                     if complete {
                         NSLayoutConstraint.deactivate(msgConstraints)
                         successLbl.removeFromSuperview()
@@ -265,6 +269,7 @@ class PwPushViewController: UIViewController {
         addBgTapRecognizer()
         addLblTapRecognizer(to: timeLbl)
         addLblTapRecognizer(to: viewsLbl)
+        //TODO: fix checkOnePswdAvailable
 //        checkOnePswdAvailable();
         setNeedsStatusBarAppearanceUpdate()
     }
@@ -329,6 +334,17 @@ private struct URLs {
 }
 
 private struct AnimationConstants {
-    static let txtFieldFadeIn: TimeInterval = 0.5
+    static let txtFieldFadeIn: TimeInterval = 0.3
+    static let successMsgFade: TimeInterval = 0.5
+    static let successMsgLinger: TimeInterval = 1
+}
+
+private struct Constants {
+    static let successMsgFontSize: CGFloat = 24
+    static let successMsgYConstant: CGFloat = -50
+}
+
+private struct Strings {
+    static let successMsg = "Your password has been sent!"
 }
 
