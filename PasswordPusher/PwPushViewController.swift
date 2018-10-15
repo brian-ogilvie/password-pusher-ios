@@ -17,9 +17,9 @@ class PwPushViewController: UIViewController {
     }
     @IBOutlet weak var onePasswordBtn: UIButton!
     @IBAction func findLoginFrom1Password(_ sender: UIButton) {
-        OnePasswordExtension.shared().findLogin(forURLString: "www.pwpush.com", for: self, sender: sender) { (loginDictionary, error) in
+        OnePasswordExtension.shared().findLogin(forURLString: URLs.onePswdSearch, for: self, sender: sender) { (loginDictionary, error) in
             if let loginDictionary = loginDictionary {
-                self.password.text = loginDictionary[AppExtensionPasswordKey] as? String ?? "Can't find it";
+                self.password.text = loginDictionary[AppExtensionPasswordKey] as? String ?? nil;
             }
         }
     }
@@ -70,7 +70,7 @@ class PwPushViewController: UIViewController {
     //MARK:- performPush
     private func performPush() {
         guard password!.text != nil && password!.text! != "" else {
-            self.present(showBasicAlert(message: "Please enter a password"), animated: true, completion: nil)
+            self.present(showBasicAlert(message: Strings.noPswdError), animated: true, completion: nil)
             return
         }
         
@@ -99,7 +99,7 @@ class PwPushViewController: UIViewController {
         session.dataTask(with: request) { (data, response, error) in
             if response == nil {
                 DispatchQueue.main.async {
-                    self.handleSessionError("Unable to get response from server.")
+                    self.handleSessionError(Strings.noServerResponse)
                 }
             }
             if let data = data {
@@ -217,13 +217,12 @@ class PwPushViewController: UIViewController {
             displayMailSuccessMsg()
             restoreDefaults()
         } else {
-            present(showBasicAlert(message: "Mail could not be sent."), animated: true, completion: nil)
+            present(showBasicAlert(message: Strings.mailFail), animated: true, completion: nil)
         }
     }
     
     //displays a success message after sending email
     func displayMailSuccessMsg() {
-        print("displayMailSuccessMsg")
         let successLbl = UILabel(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize.zero))
         successLbl.backgroundColor = UIColor(named: "Push Button BG")
         successLbl.textColor = UIColor(named: "Body Text")
@@ -329,6 +328,7 @@ private enum UserDefaultsKeys: String {
 
 private struct URLs {
     static let pwPushAPI = "https://pwpush.com/p.json"
+    static let onePswdSearch = "www.pwpush.com"
     static let pwPushPrefix = "https://pwpush.com/p/"
     static let placeholder = "https://jsonplaceholder.typicode.com/todos/1/posts"
 }
@@ -346,5 +346,8 @@ private struct Constants {
 
 private struct Strings {
     static let successMsg = "Your password has been sent!"
+    static let mailFail = "Mail could not be sent."
+    static let noPswdError = "Please enter a password"
+    static let noServerResponse = "Unable to get response from server."
 }
 
