@@ -139,6 +139,7 @@ class PwPushViewController: UIViewController {
             optionalDelete = FactoryDefaults.optionalDelete
             saveDefaults = FactoryDefaults.saveDefaults
         }
+        displaySliderInfo()
     }
     
     private func saveUserDefaults() {
@@ -265,7 +266,6 @@ class PwPushViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         restoreDefaults()
-        displaySliderInfo()
         addBgTapRecognizer()
         addLblTapRecognizer(to: timeLbl)
         addLblTapRecognizer(to: viewsLbl)
