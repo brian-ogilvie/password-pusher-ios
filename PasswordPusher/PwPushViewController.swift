@@ -36,6 +36,7 @@ class PwPushViewController: UIViewController {
         displaySliderInfo()
     }
     var expirationTxtField: UITextField?
+    var expirationFieldAnimating = false
     
     @IBOutlet weak var optionalDeleteSwitch: UISwitch!
     @IBOutlet weak var saveDefaultsSwitch: UISwitch!
@@ -189,6 +190,11 @@ class PwPushViewController: UIViewController {
         if let existingField = expirationTxtField {
             existingField.endEditing(true)
         }
+       
+        //avoid multiple text fields being put on screen at once
+        guard !expirationFieldAnimating else {return}
+        expirationFieldAnimating = true
+        
         if let sender = recognizer.view as? UILabel {
             expirationTxtField = UITextField(frame: sender.frame)
             expirationTxtField!.delegate = self
@@ -205,6 +211,7 @@ class PwPushViewController: UIViewController {
                 self.expirationTxtField!.alpha = 1
             }) { (complete) in
                 if complete {
+                    self.expirationFieldAnimating = false
                     self.expirationTxtField!.becomeFirstResponder()
                 }
             }
