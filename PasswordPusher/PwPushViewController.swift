@@ -78,11 +78,13 @@ class PwPushViewController: UIViewController {
         toggleSpinner(on: true)
         
         let myPassword = password!.text
-        guard let url = URL(string: URLs.pwPushAPI) else {
+        guard let url = URL(string: URLs.arctouchAPI) else {
             print("Unable to create url")
             return
         }
-        let parameters = ["payload": myPassword, "expire_after_days": String(timeToExpire), "expire_after_views": String(viewsToExpire), "deletable_by_viewer": String(optionalDelete)]
+        //fewer parameters for old API hosted at Arctouch
+        //let parameters = ["payload": myPassword, "expire_after_days": String(timeToExpire), "expire_after_views": String(viewsToExpire), "deletable_by_viewer": String(optionalDelete)]
+        let parameters = ["payload": myPassword, "expire_after_days": String(timeToExpire), "expire_after_views": String(viewsToExpire)]
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -106,7 +108,7 @@ class PwPushViewController: UIViewController {
             if let data = data {
                 do {
                     let pwPushObject = try JSONDecoder().decode(PwPushObject.self, from: data)
-                    let urlToEmail = URLs.pwPushPrefix + pwPushObject.urlToken
+                    let urlToEmail = URLs.arctouchPrefix + pwPushObject.urlToken
                     DispatchQueue.main.async {
                         self.toggleSpinner(on: false)
                         self.presentMailComposeVC(urlToEmail: urlToEmail)
@@ -335,8 +337,10 @@ private enum UserDefaultsKeys: String {
 
 private struct URLs {
     static let pwPushAPI = "https://pwpush.com/p.json"
+    static let arctouchAPI = "https://pwpush.arctouch.com/passwords.json"
     static let onePswdSearch = "www.pwpush.com"
     static let pwPushPrefix = "https://pwpush.com/p/"
+    static let arctouchPrefix = "https://pwpush.arctouch.com/p/"
     static let placeholder = "https://jsonplaceholder.typicode.com/todos/1/posts"
 }
 
