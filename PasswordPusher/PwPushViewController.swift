@@ -218,6 +218,31 @@ class PwPushViewController: UIViewController {
         }
     }
     
+    //detects items in device clipboard
+    private func detectClipboardContent() {
+        let pasteboard = UIPasteboard.general
+        if let pasteboardString = pasteboard.string {
+            offerToPaste(string: pasteboardString)
+        }
+    }
+    
+    private func offerToPaste(string: String) {
+        let title = "Use Clipboard?"
+        let message = "You currently have text in your clipboard. Would you like to use your clipboard as input?"
+        let yesString = "Use Clipboard"
+        let noString = "Don't Use Clipboard"
+        let pasteVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let yes = UIAlertAction(title: yesString, style: .default) { (action) in
+            self.password.text = string
+        }
+        pasteVC.addAction(yes)
+        let no = UIAlertAction(title: noString, style: .default, handler: nil)
+        pasteVC.addAction(no)
+        pasteVC.preferredAction = yes
+        
+        present(pasteVC, animated: true, completion: nil)
+    }
+    
     // called after mail VC is dismissed
     func mailFinished(sent: Bool) {
         if sent {
@@ -279,6 +304,12 @@ class PwPushViewController: UIViewController {
 //        checkOnePswdAvailable();
         setNeedsStatusBarAppearanceUpdate()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        detectClipboardContent()
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
