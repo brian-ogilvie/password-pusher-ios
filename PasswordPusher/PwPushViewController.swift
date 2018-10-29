@@ -106,10 +106,10 @@ class PwPushViewController: UIViewController {
             if let data = data {
                 do {
                     let pwPushObject = try JSONDecoder().decode(PwPushObject.self, from: data)
-                    let urlToEmail = URLs.arctouchPrefix + pwPushObject.urlToken
+                    let urlToShare = URLs.arctouchPrefix + pwPushObject.urlToken
                     DispatchQueue.main.async {
                         self.toggleSpinner(on: false)
-                        self.presentMailComposeVC(urlToEmail: urlToEmail)
+                        self.shareURL(urlToShare)
                     }
                 } catch let sessionError {
                     DispatchQueue.main.async {
@@ -218,18 +218,23 @@ class PwPushViewController: UIViewController {
         }
     }
     
-    // called after mail VC is dismissed
-    func mailFinished(sent: Bool) {
-        if sent {
-            displayMailSuccessMsg()
-            restoreDefaults()
-        } else {
-            present(showBasicAlert(message: Strings.mailFail), animated: true, completion: nil)
+    //calls UIActivityViewController to share the url
+    private func shareURL(_ urlString: String) {
+        assert(URL(string: urlString) != nil, Strings.urlError)
+        let itemProvider = SharePasswordActivityItemProvider(urlToShare: urlString)
+        let shareSheet = UIActivityViewController(activityItems: [itemProvider], applicationActivities: nil)
+        shareSheet.completionWithItemsHandler = { (activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
+            if !completed {
+                return self.present(showBasicAlert(message: Strings.notShared), animated: true, completion: nil)
+            } else {
+                return self.displayShareSuccessMsg()
+            }
         }
+        present(shareSheet, animated: true, completion: nil)
     }
     
-    //displays a success message after sending email
-    func displayMailSuccessMsg() {
+    //displays a success message after sharing password
+    func displayShareSuccessMsg() {
         let successLbl = UILabel(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize.zero))
         successLbl.backgroundColor = UIColor(named: "Push Button BG")
         successLbl.textColor = UIColor(named: "Body Text")
@@ -355,7 +360,8 @@ private struct Constants {
 
 private struct Strings {
     static let successMsg = "Your password has been sent!"
-    static let mailFail = "Mail could not be sent."
+    static let notShared = "Password not shared."
+    static let urlError = "String is not a valid URL."
     static let noPswdError = "Please enter a password"
     static let noServerResponse = "Unable to get response from server."
 }
