@@ -218,11 +218,17 @@ class PwPushViewController: UIViewController {
         }
     }
     
+    //only show this alert once
+    private var pasteHasBeenOffered = false
+    
     //detects items in device clipboard
     private func detectClipboardContent() {
         let pasteboard = UIPasteboard.general
         if let pasteboardString = pasteboard.string {
-            offerToPaste(string: pasteboardString)
+            if !pasteHasBeenOffered {
+                offerToPaste(string: pasteboardString)
+                pasteHasBeenOffered = true
+            }
         }
     }
     
