@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		851FF21021685A4C0016462A /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 851FF20E21685A4B0016462A /* OnePasswordExtension.m */; };
+		851FF21121685A4C0016462A /* 1Password.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 851FF20F21685A4C0016462A /* 1Password.xcassets */; };
+		8542AC6C216304CD002845CF /* PwPushViewController+MessageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8542AC6B216304CD002845CF /* PwPushViewController+MessageUI.swift */; };
+		8542AC6E216317EB002845CF /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8542AC6D216317EB002845CF /* Utilities.swift */; };
+		8569DE0A2173870E008E1EBB /* BigCaslon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8569DE092173870E008E1EBB /* BigCaslon.ttf */; };
+		857D484D216B77BB00C639FC /* PwPushObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D484C216B77BB00C639FC /* PwPushObject.swift */; };
+		85DF79B4216290CB008BA272 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85DF79B3216290CB008BA272 /* Colors.xcassets */; };
 		85F0E409215DC34500D01FD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F0E408215DC34500D01FD4 /* AppDelegate.swift */; };
 		85F0E40B215DC34500D01FD4 /* PwPushViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F0E40A215DC34500D01FD4 /* PwPushViewController.swift */; };
 		85F0E40E215DC34500D01FD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85F0E40C215DC34500D01FD4 /* Main.storyboard */; };
@@ -15,6 +22,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		851FF20C21685A4A0016462A /* PasswordPusher-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PasswordPusher-Bridging-Header.h"; sourceTree = "<group>"; };
+		851FF20D21685A4B0016462A /* OnePasswordExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnePasswordExtension.h; sourceTree = "<group>"; };
+		851FF20E21685A4B0016462A /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
+		851FF20F21685A4C0016462A /* 1Password.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = 1Password.xcassets; sourceTree = "<group>"; };
+		8542AC6B216304CD002845CF /* PwPushViewController+MessageUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PwPushViewController+MessageUI.swift"; sourceTree = "<group>"; };
+		8542AC6D216317EB002845CF /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		8569DE092173870E008E1EBB /* BigCaslon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BigCaslon.ttf; sourceTree = "<group>"; };
+		857D484C216B77BB00C639FC /* PwPushObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwPushObject.swift; sourceTree = "<group>"; };
+		85DF79B3216290CB008BA272 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		85F0E405215DC34500D01FD4 /* PasswordPusher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PasswordPusher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F0E408215DC34500D01FD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85F0E40A215DC34500D01FD4 /* PwPushViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwPushViewController.swift; sourceTree = "<group>"; };
@@ -35,11 +51,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8569DE0821738659008E1EBB /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				8569DE092173870E008E1EBB /* BigCaslon.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		85F0E3FC215DC34500D01FD4 = {
 			isa = PBXGroup;
 			children = (
 				85F0E407215DC34500D01FD4 /* PasswordPusher */,
 				85F0E406215DC34500D01FD4 /* Products */,
+				851FF20C21685A4A0016462A /* PasswordPusher-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -55,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				85F0E40A215DC34500D01FD4 /* PwPushViewController.swift */,
+				8542AC6B216304CD002845CF /* PwPushViewController+MessageUI.swift */,
 				85F0E40C215DC34500D01FD4 /* Main.storyboard */,
 				85F0E41A215DC3DD00D01FD4 /* Supporting Files */,
 				85F0E414215DC34A00D01FD4 /* Info.plist */,
@@ -65,9 +91,16 @@
 		85F0E41A215DC3DD00D01FD4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				857D484C216B77BB00C639FC /* PwPushObject.swift */,
+				851FF20F21685A4C0016462A /* 1Password.xcassets */,
+				851FF20D21685A4B0016462A /* OnePasswordExtension.h */,
+				851FF20E21685A4B0016462A /* OnePasswordExtension.m */,
+				8542AC6D216317EB002845CF /* Utilities.swift */,
+				85DF79B3216290CB008BA272 /* Colors.xcassets */,
 				85F0E408215DC34500D01FD4 /* AppDelegate.swift */,
 				85F0E40F215DC34A00D01FD4 /* Assets.xcassets */,
 				85F0E411215DC34A00D01FD4 /* LaunchScreen.storyboard */,
+				8569DE0821738659008E1EBB /* Fonts */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -131,7 +164,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				851FF21121685A4C0016462A /* 1Password.xcassets in Resources */,
+				8569DE0A2173870E008E1EBB /* BigCaslon.ttf in Resources */,
 				85F0E413215DC34A00D01FD4 /* LaunchScreen.storyboard in Resources */,
+				85DF79B4216290CB008BA272 /* Colors.xcassets in Resources */,
 				85F0E410215DC34A00D01FD4 /* Assets.xcassets in Resources */,
 				85F0E40E215DC34500D01FD4 /* Main.storyboard in Resources */,
 			);
@@ -145,6 +181,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				85F0E40B215DC34500D01FD4 /* PwPushViewController.swift in Sources */,
+				8542AC6C216304CD002845CF /* PwPushViewController+MessageUI.swift in Sources */,
+				851FF21021685A4C0016462A /* OnePasswordExtension.m in Sources */,
+				857D484D216B77BB00C639FC /* PwPushObject.swift in Sources */,
+				8542AC6E216317EB002845CF /* Utilities.swift in Sources */,
 				85F0E409215DC34500D01FD4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
