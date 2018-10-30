@@ -10,8 +10,6 @@ import UIKit
 
 class PwPushViewController: UIViewController {
     
-<<<<<<< HEAD
-=======
     //MARK:- Storyboard
     
     @IBOutlet weak var password: UITextField! {
@@ -362,6 +360,5 @@ private struct Strings {
     static let mailFail = "Mail could not be sent."
     static let noPswdError = "Please enter a password"
     static let noServerResponse = "Unable to get response from server."
->>>>>>> parent of 7e15d98... removed commented code for current pwpush api
 }
 
