@@ -82,11 +82,6 @@ class PwPushViewController: UIViewController {
             print("Unable to create url")
             return
         }
-<<<<<<< HEAD
-        //fewer parameters for old API hosted at Arctouch
-        //let parameters = ["payload": myPassword, "expire_after_days": String(timeToExpire), "expire_after_views": String(viewsToExpire), "deletable_by_viewer": String(optionalDelete)]
-=======
->>>>>>> parent of 7bbf3ae... revert to initial blank project
         let parameters = ["payload": myPassword, "expire_after_days": String(timeToExpire), "expire_after_views": String(viewsToExpire)]
 
         var request = URLRequest(url: url)
