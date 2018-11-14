@@ -231,6 +231,11 @@ class PwPushViewController: UIViewController {
             }
         }
         present(shareSheet, animated: true, completion: nil)
+        //activityVC is presented inside popoverVC on iPad
+        if let popOver = shareSheet.popoverPresentationController {
+            popOver.sourceView = view
+            popOver.sourceRect = pushButton.frame
+        }
     }
     
     //displays a success message after sharing password
