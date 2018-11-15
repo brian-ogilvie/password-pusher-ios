@@ -59,6 +59,26 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		857CDE64219D001B0089AE1E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8569DE0821738659008E1EBB /* Fonts */,
+				851FF20F21685A4C0016462A /* 1Password.xcassets */,
+				85DF79B3216290CB008BA272 /* Colors.xcassets */,
+				85F0E40F215DC34A00D01FD4 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		857CDE65219D016E0089AE1E /* OnePassword */ = {
+			isa = PBXGroup;
+			children = (
+				851FF20D21685A4B0016462A /* OnePasswordExtension.h */,
+				851FF20E21685A4B0016462A /* OnePasswordExtension.m */,
+			);
+			path = OnePassword;
+			sourceTree = "<group>";
+		};
 		85F0E3FC215DC34500D01FD4 = {
 			isa = PBXGroup;
 			children = (
@@ -82,7 +102,11 @@
 				85F0E40A215DC34500D01FD4 /* PwPushViewController.swift */,
 				8542AC6B216304CD002845CF /* PwPushViewController+MessageUI.swift */,
 				85F0E40C215DC34500D01FD4 /* Main.storyboard */,
+				8542AC6D216317EB002845CF /* Utilities.swift */,
+				85F0E408215DC34500D01FD4 /* AppDelegate.swift */,
+				857CDE64219D001B0089AE1E /* Resources */,
 				85F0E41A215DC3DD00D01FD4 /* Supporting Files */,
+				857CDE65219D016E0089AE1E /* OnePassword */,
 				85F0E414215DC34A00D01FD4 /* Info.plist */,
 			);
 			path = PasswordPusher;
@@ -92,15 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				857D484C216B77BB00C639FC /* PwPushObject.swift */,
-				851FF20F21685A4C0016462A /* 1Password.xcassets */,
-				851FF20D21685A4B0016462A /* OnePasswordExtension.h */,
-				851FF20E21685A4B0016462A /* OnePasswordExtension.m */,
-				8542AC6D216317EB002845CF /* Utilities.swift */,
-				85DF79B3216290CB008BA272 /* Colors.xcassets */,
-				85F0E408215DC34500D01FD4 /* AppDelegate.swift */,
-				85F0E40F215DC34A00D01FD4 /* Assets.xcassets */,
 				85F0E411215DC34A00D01FD4 /* LaunchScreen.storyboard */,
-				8569DE0821738659008E1EBB /* Fonts */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
