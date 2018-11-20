@@ -68,9 +68,11 @@ class PasswordPusherViewController: UIViewController {
         }
     }
     @IBAction func timeSliderChanged(_ sender: UISlider) {
+        removeEpirationTextField()
         displaySliderInfo()
     }
     @IBAction func viewsSliderChanged(_ sender: UISlider) {
+        removeEpirationTextField()
         displaySliderInfo()
     }
     @IBAction func pushButtonDidTap(_ sender: UIButton) {
@@ -79,7 +81,7 @@ class PasswordPusherViewController: UIViewController {
     
     let passwordPusherHandler = PasswordPusherHandler()
 
-    //MARK:- performPush
+    //MARK:- Functions
     private func performPush() {
         guard password!.text != nil && password!.text! != "" else {
             self.present(showBasicAlert(message: Strings.noPswdError), animated: true, completion: nil)
@@ -157,9 +159,7 @@ class PasswordPusherViewController: UIViewController {
     
     //displays UITextField to enter expiration days or views
     @objc private func displayExpirationField(recognizer: UITapGestureRecognizer) {
-        if let existingField = expirationTxtField {
-            existingField.endEditing(true)
-        }
+        removeEpirationTextField()
        
         //avoid multiple text fields being put on screen at once
         guard !expirationFieldIsAnimating else {return}
@@ -185,6 +185,13 @@ class PasswordPusherViewController: UIViewController {
                     self.expirationTxtField!.becomeFirstResponder()
                 }
             }
+        }
+    }
+    
+    // removes any existing expiration text field
+    private func removeEpirationTextField() {
+        if let existingField = expirationTxtField {
+            existingField.endEditing(true)
         }
     }
     
