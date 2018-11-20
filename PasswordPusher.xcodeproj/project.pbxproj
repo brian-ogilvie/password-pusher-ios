@@ -107,7 +107,6 @@
 				857CDE64219D001B0089AE1E /* Resources */,
 				85F0E41A215DC3DD00D01FD4 /* Supporting Files */,
 				857CDE65219D016E0089AE1E /* OnePassword */,
-				85F0E414215DC34A00D01FD4 /* Info.plist */,
 			);
 			path = PasswordPusher;
 			sourceTree = "<group>";
@@ -115,6 +114,7 @@
 		85F0E41A215DC3DD00D01FD4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				85F0E414215DC34A00D01FD4 /* Info.plist */,
 				857D484C216B77BB00C639FC /* PwPushObject.swift */,
 				85F0E411215DC34A00D01FD4 /* LaunchScreen.storyboard */,
 			);
@@ -350,7 +350,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M49Q787GTR;
-				INFOPLIST_FILE = PasswordPusher/Info.plist;
+				INFOPLIST_FILE = "PasswordPusher/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -371,7 +371,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M49Q787GTR;
-				INFOPLIST_FILE = PasswordPusher/Info.plist;
+				INFOPLIST_FILE = "PasswordPusher/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
