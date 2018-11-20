@@ -98,32 +98,23 @@ class PasswordPusherViewController: UIViewController {
         self.present(showBasicAlert(message: message), animated: true)
     }
     
+    private let userDefaultsManager = PasswordPusherUserDefaultsManager()
+    
     private func restoreDefaults() {
         password!.text = nil
-        //if settings have been saved before, restore from UserDefaults
-        if UserDefaults.standard.bool(forKey: UserDefaultsKeys.saveDefaults.rawValue) == true {
-            viewsSlider.setValue(UserDefaults.standard.float(forKey: UserDefaultsKeys.viewsToExpire.rawValue), animated: true)
-            timeSlider.setValue(UserDefaults.standard.float(forKey: UserDefaultsKeys.timeToExpire.rawValue), animated: true)
-            optionalDelete = UserDefaults.standard.bool(forKey: UserDefaultsKeys.optionalDelete.rawValue)
-            saveDefaults = UserDefaults.standard.bool(forKey: UserDefaultsKeys.saveDefaults.rawValue)
-        } else { //restore from FactoryDefaults
-            viewsSlider.setValue(FactoryDefaults.viewsToExpire, animated: true)
-            timeSlider.setValue(FactoryDefaults.timeToExpire, animated: true)
-            optionalDelete = FactoryDefaults.optionalDelete
-            saveDefaults = FactoryDefaults.saveDefaults
-        }
+        
+        let defaults = userDefaultsManager.restoreDefaults()
+        viewsSlider.setValue(Float(defaults.viewsToExpire), animated: true)
+        timeSlider.setValue(Float(defaults.timeToExpire), animated: true)
+        optionalDelete = defaults.optionalDelete
+        saveDefaults = defaults.saveDefaults
+        
         displaySliderInfo()
     }
     
     private func saveUserDefaults() {
-        if saveDefaults { //if user has selected to save settings for future
-            UserDefaults.standard.set(viewsToExpire, forKey: UserDefaultsKeys.viewsToExpire.rawValue)
-            UserDefaults.standard.set(timeToExpire, forKey: UserDefaultsKeys.timeToExpire.rawValue)
-            UserDefaults.standard.set(optionalDelete, forKey: UserDefaultsKeys.optionalDelete.rawValue)
-            UserDefaults.standard.set(saveDefaults, forKey: UserDefaultsKeys.saveDefaults.rawValue)
-        } else {
-            UserDefaults.standard.set(false, forKey: UserDefaultsKeys.saveDefaults.rawValue)
-        }
+        let defaults = DefaultSettings(time: timeToExpire, views: viewsToExpire, delete: optionalDelete, save: saveDefaults)
+        userDefaultsManager.saveUserDefaults(defaults: defaults)
     }
     
     private func displaySliderInfo() {
@@ -310,20 +301,6 @@ extension PasswordPusherViewController: UITextFieldDelegate {
 }
 
 extension PasswordPusherViewController {
-    private struct FactoryDefaults {
-        static let timeToExpire: Float = 7
-        static let viewsToExpire: Float = 5
-        static let optionalDelete: Bool = true
-        static let saveDefaults: Bool = false
-    }
-    
-    private enum UserDefaultsKeys: String {
-        case saveDefaults
-        case timeToExpire
-        case viewsToExpire
-        case optionalDelete
-    }
-    
     private struct AnimationConstants {
         static let txtFieldFadeIn: TimeInterval = 0.3
         static let successMsgFade: TimeInterval = 0.5
