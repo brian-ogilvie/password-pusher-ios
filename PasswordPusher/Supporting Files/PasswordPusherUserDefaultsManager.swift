@@ -9,11 +9,6 @@
 import Foundation
 
 class PasswordPusherUserDefaultsManager {
-    var viewsToExpire: Float {
-        get {
-            return UserDefaults.standard.float(forKey: UserDefaultsKeys.viewsToExpire.rawValue)
-        }
-    }
     func restoreDefaults() -> DefaultSettings {
         if UserDefaults.standard.bool(forKey: UserDefaultsKeys.saveDefaults.rawValue) == true {
             let views = UserDefaults.standard.integer(forKey: UserDefaultsKeys.viewsToExpire.rawValue)

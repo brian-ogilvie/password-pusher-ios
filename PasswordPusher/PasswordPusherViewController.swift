@@ -79,7 +79,9 @@ class PasswordPusherViewController: UIViewController {
         performPush()
     }
     
-    let passwordPusherHandler = PasswordPusherHandler()
+    //MARK:- Model
+    private let passwordPusherHandler = PasswordPusherHandler()
+    private let userDefaultsManager = PasswordPusherUserDefaultsManager()
 
     //MARK:- Functions
     private func performPush() {
@@ -97,8 +99,6 @@ class PasswordPusherViewController: UIViewController {
         toggleSpinner(on: false)
         self.present(showBasicAlert(message: message), animated: true)
     }
-    
-    private let userDefaultsManager = PasswordPusherUserDefaultsManager()
     
     private func restoreDefaults() {
         password!.text = nil
