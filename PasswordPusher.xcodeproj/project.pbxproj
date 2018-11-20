@@ -15,7 +15,7 @@
 		857D484D216B77BB00C639FC /* PwPushObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D484C216B77BB00C639FC /* PwPushObject.swift */; };
 		85DF79B4216290CB008BA272 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85DF79B3216290CB008BA272 /* Colors.xcassets */; };
 		85F0E409215DC34500D01FD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F0E408215DC34500D01FD4 /* AppDelegate.swift */; };
-		85F0E40B215DC34500D01FD4 /* PwPushViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F0E40A215DC34500D01FD4 /* PwPushViewController.swift */; };
+		85F0E40B215DC34500D01FD4 /* PasswordPusherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F0E40A215DC34500D01FD4 /* PasswordPusherViewController.swift */; };
 		85F0E40E215DC34500D01FD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85F0E40C215DC34500D01FD4 /* Main.storyboard */; };
 		85F0E410215DC34A00D01FD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85F0E40F215DC34A00D01FD4 /* Assets.xcassets */; };
 		85F0E413215DC34A00D01FD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85F0E411215DC34A00D01FD4 /* LaunchScreen.storyboard */; };
@@ -33,7 +33,7 @@
 		85DF79B3216290CB008BA272 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		85F0E405215DC34500D01FD4 /* PasswordPusher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PasswordPusher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F0E408215DC34500D01FD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		85F0E40A215DC34500D01FD4 /* PwPushViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PwPushViewController.swift; sourceTree = "<group>"; };
+		85F0E40A215DC34500D01FD4 /* PasswordPusherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordPusherViewController.swift; sourceTree = "<group>"; };
 		85F0E40D215DC34500D01FD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		85F0E40F215DC34A00D01FD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		85F0E412215DC34A00D01FD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -99,7 +99,7 @@
 		85F0E407215DC34500D01FD4 /* PasswordPusher */ = {
 			isa = PBXGroup;
 			children = (
-				85F0E40A215DC34500D01FD4 /* PwPushViewController.swift */,
+				85F0E40A215DC34500D01FD4 /* PasswordPusherViewController.swift */,
 				8542AC6B216304CD002845CF /* PwPushViewController+MessageUI.swift */,
 				85F0E40C215DC34500D01FD4 /* Main.storyboard */,
 				8542AC6D216317EB002845CF /* Utilities.swift */,
@@ -196,7 +196,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				85F0E40B215DC34500D01FD4 /* PwPushViewController.swift in Sources */,
+				85F0E40B215DC34500D01FD4 /* PasswordPusherViewController.swift in Sources */,
 				8542AC6C216304CD002845CF /* PwPushViewController+MessageUI.swift in Sources */,
 				851FF21021685A4C0016462A /* OnePasswordExtension.m in Sources */,
 				857D484D216B77BB00C639FC /* PwPushObject.swift in Sources */,
@@ -355,7 +355,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = broadway.brianogilvie.PasswordPusher;
+				PRODUCT_BUNDLE_IDENTIFIER = com.arctouch.passwordpusher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PasswordPusher-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -376,7 +376,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = broadway.brianogilvie.PasswordPusher;
+				PRODUCT_BUNDLE_IDENTIFIER = com.arctouch.passwordpusher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PasswordPusher-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;

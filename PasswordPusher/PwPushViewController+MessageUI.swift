@@ -1,15 +1,22 @@
 //
-//  PwPushViewController+MessageUI.swift
+//  PasswordPusherViewController+MessageUI.swift
 //  PasswordPusher
 //
-//  Created by Brian Ogilvie on 10/1/18.
-//  Copyright © 2018 Brian Ogilvie Development. All rights reserved.
+// Copyright 2018 ArcTouch, LLC.
+// All rights reserved.
+//
+// This file, its contents, concepts, methods, behavior, and operation
+// (collectively the "Software") are protected by trade secret, patent,
+// and copyright laws. The use of the Software is governed by a license
+// agreement. Disclosure of the Software to third parties, in any form,
+// in whole or in part, is expressly prohibited except as authorized by
+// the license agreement.
 //
 
 import UIKit
 import MessageUI
 
-extension PwPushViewController: MFMailComposeViewControllerDelegate {
+extension PasswordPusherViewController: MFMailComposeViewControllerDelegate {
    
     //create an email with the URL to view password
     func configureMailController(urlToEmail url: String) -> MFMailComposeViewController {

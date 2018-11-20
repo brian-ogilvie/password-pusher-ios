@@ -1,14 +1,20 @@
 //
-//  ViewController.swift
+//  PasswordPusherViewController.swift
 //  PasswordPusher
 //
-//  Created by Brian Ogilvie on 9/27/18.
-//  Copyright © 2018 Brian Ogilvie Development. All rights reserved.
+// Copyright 2018 ArcTouch, LLC.
+// All rights reserved.
 //
-
+// This file, its contents, concepts, methods, behavior, and operation
+// (collectively the "Software") are protected by trade secret, patent,
+// and copyright laws. The use of the Software is governed by a license
+// agreement. Disclosure of the Software to third parties, in any form,
+// in whole or in part, is expressly prohibited except as authorized by
+// the license agreement.
+//
 import UIKit
 
-class PwPushViewController: UIViewController {
+class PasswordPusherViewController: UIViewController {
     
     //MARK:- Storyboard
     
@@ -16,35 +22,20 @@ class PwPushViewController: UIViewController {
         didSet { password.delegate = self }
     }
     @IBOutlet weak var onePasswordBtn: UIButton!
-    @IBAction func findLoginFrom1Password(_ sender: UIButton) {
-        OnePasswordExtension.shared().findLogin(forURLString: URLs.onePswdSearch, for: self, sender: sender) { (loginDictionary, error) in
-            if let loginDictionary = loginDictionary {
-                self.password.text = loginDictionary[AppExtensionPasswordKey] as? String ?? nil;
-            }
-        }
-    }
     @IBOutlet weak var timeStackView: UIStackView!
     @IBOutlet weak var timeSlider: UISlider!
     @IBOutlet weak var timeLbl: UILabel!
-    @IBAction func timeSliderChanged(_ sender: UISlider) {
-        displaySliderInfo()
-    }
     @IBOutlet weak var viewsStackView: UIStackView!
     @IBOutlet weak var viewsSlider: UISlider!
     @IBOutlet weak var viewsLbl: UILabel!
-    @IBAction func viewsSliderChanged(_ sender: UISlider) {
-        displaySliderInfo()
-    }
-    var expirationTxtField: UITextField?
-    var expirationFieldIsAnimating = false
     
     @IBOutlet weak var optionalDeleteSwitch: UISwitch!
     @IBOutlet weak var saveDefaultsSwitch: UISwitch!
     @IBOutlet weak var pushButton: UIButton!
-    @IBAction func pushButtonDidTap(_ sender: UIButton) {
-        performPush()
-    }
     @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
+    private var expirationTxtField: UITextField?
+    private var expirationFieldIsAnimating = false
     
     //MARK:- Settings
     private var timeToExpire: Int {
@@ -67,7 +58,25 @@ class PwPushViewController: UIViewController {
             saveDefaultsSwitch.setOn(newValue, animated: true)
         }
     }
-    
+
+    //MARK:- IBActions
+    @IBAction func findLoginFrom1Password(_ sender: UIButton) {
+        OnePasswordExtension.shared().findLogin(forURLString: URLs.onePswdSearch, for: self, sender: sender) { (loginDictionary, error) in
+            if let loginDictionary = loginDictionary {
+                self.password.text = loginDictionary[AppExtensionPasswordKey] as? String ?? nil;
+            }
+        }
+    }
+    @IBAction func timeSliderChanged(_ sender: UISlider) {
+        displaySliderInfo()
+    }
+    @IBAction func viewsSliderChanged(_ sender: UISlider) {
+        displaySliderInfo()
+    }
+    @IBAction func pushButtonDidTap(_ sender: UIButton) {
+        performPush()
+    }
+
     //MARK:- performPush
     private func performPush() {
         guard password!.text != nil && password!.text! != "" else {
@@ -284,7 +293,7 @@ class PwPushViewController: UIViewController {
     }
 }
 
-extension PwPushViewController: UITextFieldDelegate {
+extension PasswordPusherViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == expirationTxtField {
             let sliderToUpdate = textField.tag == 1 ? timeSlider : viewsSlider
