@@ -76,6 +76,8 @@ class PasswordPusherViewController: UIViewController {
     @IBAction func pushButtonDidTap(_ sender: UIButton) {
         performPush()
     }
+    
+    let passwordPusherHandler = PasswordPusherHandler()
 
     //MARK:- performPush
     private func performPush() {
@@ -83,50 +85,9 @@ class PasswordPusherViewController: UIViewController {
             self.present(showBasicAlert(message: Strings.noPswdError), animated: true, completion: nil)
             return
         }
-        
         toggleSpinner(on: true)
-        
-        let myPassword = password!.text
-        guard let url = URL(string: URLs.arctouchAPI) else {
-            print("Unable to create url")
-            return
-        }
-        let parameters = ["payload": myPassword, "expire_after_days": String(timeToExpire), "expire_after_views": String(viewsToExpire)]
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else {
-            print("Unable to create httpBody")
-            return
-        }
-        request.httpBody = httpBody
-        //TODO: add ability to cancel operation if long response time
-
-        let session = URLSession.shared
-        session.dataTask(with: request) { (data, response, error) in
-            if response == nil {
-                DispatchQueue.main.async {
-                    self.handleSessionError(Strings.noServerResponse)
-                }
-            }
-            if let data = data {
-                do {
-                    let pwPushObject = try JSONDecoder().decode(PwPushObject.self, from: data)
-                    let urlToEmail = URLs.arctouchPrefix + pwPushObject.urlToken
-                    DispatchQueue.main.async {
-                        self.toggleSpinner(on: false)
-                        self.presentMailComposeVC(urlToEmail: urlToEmail)
-                    }
-                } catch let sessionError {
-                    DispatchQueue.main.async {
-                        self.handleSessionError(String(describing: sessionError))
-                    }
-                }
-            }
-        }.resume()
+        let myPassword = password!.text!
+        passwordPusherHandler.handlePush(password: myPassword, expireDays: timeToExpire, expireViews: viewsToExpire)
         saveUserDefaults()
     }
     
@@ -280,6 +241,7 @@ class PasswordPusherViewController: UIViewController {
     //MARK:- VCLC
     override func viewDidLoad() {
         super.viewDidLoad()
+        passwordPusherHandler.delegate = self
         restoreDefaults()
         addBgTapRecognizer()
         addLblTapRecognizer(to: timeLbl)
@@ -290,6 +252,18 @@ class PasswordPusherViewController: UIViewController {
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+}
+
+extension PasswordPusherViewController: PasswordPusherHandlerDelegate {
+    func handleSessionSuccess(url: String) {
+        toggleSpinner(on: false)
+        self.presentMailComposeVC(urlToEmail: url)
+    }
+    
+    func handleSessionError(message: String) {
+        toggleSpinner(on: false)
+        self.present(showBasicAlert(message: message), animated: true, completion: nil)
     }
 }
 
@@ -328,44 +302,39 @@ extension PasswordPusherViewController: UITextFieldDelegate {
     }
 }
 
-private struct FactoryDefaults {
-    static let timeToExpire: Float = 7
-    static let viewsToExpire: Float = 5
-    static let optionalDelete: Bool = true
-    static let saveDefaults: Bool = false
+extension PasswordPusherViewController {
+    private struct FactoryDefaults {
+        static let timeToExpire: Float = 7
+        static let viewsToExpire: Float = 5
+        static let optionalDelete: Bool = true
+        static let saveDefaults: Bool = false
+    }
+    
+    private enum UserDefaultsKeys: String {
+        case saveDefaults
+        case timeToExpire
+        case viewsToExpire
+        case optionalDelete
+    }
+    
+    private struct AnimationConstants {
+        static let txtFieldFadeIn: TimeInterval = 0.3
+        static let successMsgFade: TimeInterval = 0.5
+        static let successMsgLinger: TimeInterval = 1
+    }
+    
+    private struct Constants {
+        static let successMsgFontSize: CGFloat = 24
+        static let successMsgYConstant: CGFloat = -50
+    }
+    
+    private struct URLs {
+        static let onePswdSearch = "www.pwpush.com"
+    }
+    
+    private struct Strings {
+        static let successMsg = "Your password has been sent!"
+        static let mailFail = "Mail could not be sent."
+        static let noPswdError = "Please enter a password"
+    }
 }
-
-private enum UserDefaultsKeys: String {
-    case saveDefaults
-    case timeToExpire
-    case viewsToExpire
-    case optionalDelete
-}
-
-private struct URLs {
-    static let pwPushAPI = "https://pwpush.com/p.json"
-    static let arctouchAPI = "https://pwpush.arctouch.com/passwords.json"
-    static let onePswdSearch = "www.pwpush.com"
-    static let pwPushPrefix = "https://pwpush.com/p/"
-    static let arctouchPrefix = "https://pwpush.arctouch.com/p/"
-    static let placeholder = "https://jsonplaceholder.typicode.com/todos/1/posts"
-}
-
-private struct AnimationConstants {
-    static let txtFieldFadeIn: TimeInterval = 0.3
-    static let successMsgFade: TimeInterval = 0.5
-    static let successMsgLinger: TimeInterval = 1
-}
-
-private struct Constants {
-    static let successMsgFontSize: CGFloat = 24
-    static let successMsgYConstant: CGFloat = -50
-}
-
-private struct Strings {
-    static let successMsg = "Your password has been sent!"
-    static let mailFail = "Mail could not be sent."
-    static let noPswdError = "Please enter a password"
-    static let noServerResponse = "Unable to get response from server."
-}
-
