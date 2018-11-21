@@ -16,7 +16,7 @@
 import Foundation
 
 class PasswordPusherHandler {
-    var delegate: PasswordPusherHandlerDelegate?
+    weak var delegate: PasswordPusherHandlerDelegate?
     
     func handlePush(password: String, expireDays: Int, expireViews: Int) {
         guard let url = URL(string: URLs.arctouchAPI) else {
@@ -74,7 +74,7 @@ extension PasswordPusherHandler {
     }
 }
 
-protocol PasswordPusherHandlerDelegate {
+protocol PasswordPusherHandlerDelegate: AnyObject {
     func handleSessionSuccess(url: String)
     func handleSessionError(message: String)
 }
