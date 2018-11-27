@@ -75,11 +75,7 @@ class PasswordPusherViewController: UIViewController {
 
     //MARK:- IBActions
     @IBAction func onePasswordButtonPressed(_ sender: UIButton) {
-        OnePasswordExtension.shared().findLogin(forURLString: URLs.onePasswordSearch, for: self, sender: sender) { (loginDictionary, error) in
-            if let loginDictionary = loginDictionary {
-                self.passwordTextField.text = loginDictionary[AppExtensionPasswordKey] as? String ?? nil;
-            }
-        }
+        onePasswordHandler.searchOnePassword(for: URLs.onePasswordSearch, presentOn: self, sender: sender, success: handleOnePasswordSearchSuccess(_:), failure: handleOnePasswordSearchError(_:))
     }
     @IBAction func passwordDaysToExpireSliderValueChanged(_ sender: UISlider) {
         removeExpirationTextField()
@@ -96,8 +92,17 @@ class PasswordPusherViewController: UIViewController {
     //MARK:- Model
     private let passwordPusherHandler = PasswordPusherHandler()
     private let settingsManager = PasswordPusherSettingsManager()
+    private let onePasswordHandler = OnePasswordHandler()
 
     //MARK:- Private Functions
+    private func handleOnePasswordSearchSuccess(_ password: String) {
+        passwordTextField.text = password
+    }
+    
+    private func handleOnePasswordSearchError(_ error: Error?) {
+        showBasicAlert(message: Strings.onePasswordSearchError)
+    }
+    
     private func performPasswordPush() {
         guard let passwordText = passwordTextField!.text?.trimmingCharacters(in: .whitespaces), !passwordText.isEmpty else {
             showBasicAlert(message: Strings.noPasswordError)
@@ -145,8 +150,12 @@ class PasswordPusherViewController: UIViewController {
     }
     
     private func displaySliderInfo() {
-        passwordDaysToExpireLabel.text = "\(passwordDaysToExpire) Days"
-        passwordViewsToExpireLabel.text = "\(passwordViewsToExpire) Views"
+        passwordDaysToExpireLabel.text = createExpirationString(for: passwordDaysToExpire, with: "Day")
+        passwordViewsToExpireLabel.text = createExpirationString(for: passwordViewsToExpire, with: "View")
+    }
+    
+    private func createExpirationString(for number: Int, with noun: String) -> String {
+        return "\(number) \(noun)" + (number == 1 ? "" : "s")
     }
     
     private func toggleSpinner(on: Bool) {
@@ -181,7 +190,7 @@ class PasswordPusherViewController: UIViewController {
         guard let sender = recognizer.view as? UILabel, !passwordExpirationTextFieldIsAnimating else {return}
         passwordExpirationTextFieldIsAnimating = true
         
-        let placeholder = sender == passwordDaysToExpireLabel ? "\(passwordDaysToExpire) Days" : "\(passwordViewsToExpire) Views"
+        let placeholder = sender == passwordDaysToExpireLabel ? passwordDaysToExpireLabel.text! : passwordViewsToExpireLabel.text!
         let tag = sender == passwordDaysToExpireLabel ? TextFieldTag.daysToExpire.rawValue : TextFieldTag.viewsToExpire.rawValue
         passwordExpirationTextField = createExpirationTextField(placeholder: placeholder, tag: tag)
         view.addSubview(passwordExpirationTextField!)
@@ -321,6 +330,7 @@ extension PasswordPusherViewController {
         static let passwordSuccessfullySentMessage = "Your password has been sent!"
         static let emailFailureMessage = "Mail could not be sent."
         static let noPasswordError = "Please enter a password. It needs to have at least one character."
+        static let onePasswordSearchError = "Password not retrieved from OnePassword"
     }
     
     private enum TextFieldTag: Int {
