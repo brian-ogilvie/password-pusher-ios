@@ -23,19 +23,18 @@ class PasswordPusherHandler {
             print("Unable to create url")
             return
         }
-        let parameters = ["payload": password, "expire_after_days": String(expireDays), "expire_after_views": String(expireViews)]
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
-        guard let httpBody = try? JSONSerialization.data(withJSONObject: parameters, options: []) else {
+        
+        let httpParameters = HttpParameters(payload: password, expireAfterDays: expireDays, expireAfterViews: expireViews)
+        guard let httpBody = try? JSONEncoder().encode(httpParameters) else {
             print("Unable to create httpBody")
-            return
+           return
         }
         request.httpBody = httpBody
-        //TODO: add ability to cancel operation if long response time
         
         let session = URLSession.shared
         session.dataTask(with: request) { [weak self] (data, response, error) in
@@ -46,7 +45,7 @@ class PasswordPusherHandler {
             }
             if let data = data {
                 do {
-                    let pwPushObject = try JSONDecoder().decode(PwPushObject.self, from: data)
+                    let pwPushObject = try JSONDecoder().decode(PasswordPushObject.self, from: data)
                     let urlToSend = URLs.arctouchPrefix + pwPushObject.urlToken
                     DispatchQueue.main.async {
                         self?.delegate?.handleSessionSuccess(url: urlToSend)

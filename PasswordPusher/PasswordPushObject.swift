@@ -1,5 +1,5 @@
 //
-//  PwPushObject.swift
+//  PasswordPushObject.swift
 //  PasswordPusher
 //
 // Copyright 2018 ArcTouch, LLC.
@@ -15,7 +15,7 @@
 
 import Foundation
 
-struct PwPushObject: Decodable {
+struct PasswordPushObject: Decodable {
     var created: String
     var deleted: Bool
     var expireDays: Int

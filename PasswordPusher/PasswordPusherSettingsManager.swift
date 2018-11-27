@@ -1,5 +1,5 @@
 //
-//  PasswordPusherUserDefaultsManager.swift
+//  PasswordPusherSettingsManager.swift
 //  PasswordPusher
 //
 // Copyright 2018 ArcTouch, LLC.
@@ -15,8 +15,8 @@
 
 import Foundation
 
-class PasswordPusherUserDefaultsManager {
-    func restoreDefaults() -> DefaultSettings {
+class PasswordPusherSettingsManager {
+    func restoreSettings() -> DefaultSettings {
         if UserDefaults.standard.bool(forKey: UserDefaultsKeys.saveDefaults.rawValue) == true {
             let views = UserDefaults.standard.integer(forKey: UserDefaultsKeys.viewsToExpire.rawValue)
             let time = UserDefaults.standard.integer(forKey: UserDefaultsKeys.timeToExpire.rawValue)
@@ -28,20 +28,20 @@ class PasswordPusherUserDefaultsManager {
             return DefaultSettings()
         }
     }
-    
-    func saveUserDefaults(defaults: DefaultSettings) {
-        if defaults.saveDefaults { //if user has selected to save settings for future
-            UserDefaults.standard.set(defaults.viewsToExpire, forKey: UserDefaultsKeys.viewsToExpire.rawValue)
-            UserDefaults.standard.set(defaults.timeToExpire, forKey: UserDefaultsKeys.timeToExpire.rawValue)
-            UserDefaults.standard.set(defaults.optionalDelete, forKey: UserDefaultsKeys.optionalDelete.rawValue)
-            UserDefaults.standard.set(defaults.saveDefaults, forKey: UserDefaultsKeys.saveDefaults.rawValue)
+
+    func saveUserDefaults(time: Int, views: Int, delete: Bool, save: Bool) {
+        if save { //if user has selected to save settings for future
+            UserDefaults.standard.set(views, forKey: UserDefaultsKeys.viewsToExpire.rawValue)
+            UserDefaults.standard.set(time, forKey: UserDefaultsKeys.timeToExpire.rawValue)
+            UserDefaults.standard.set(delete, forKey: UserDefaultsKeys.optionalDelete.rawValue)
+            UserDefaults.standard.set(save, forKey: UserDefaultsKeys.saveDefaults.rawValue)
         } else {
             UserDefaults.standard.set(false, forKey: UserDefaultsKeys.saveDefaults.rawValue)
         }
     }
 }
 
-extension PasswordPusherUserDefaultsManager {
+extension PasswordPusherSettingsManager {
     private enum UserDefaultsKeys: String {
         case saveDefaults
         case timeToExpire

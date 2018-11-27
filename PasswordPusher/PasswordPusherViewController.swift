@@ -17,171 +17,186 @@ import UIKit
 class PasswordPusherViewController: UIViewController {
     
     //MARK:- Storyboard
-    
-    @IBOutlet weak var password: UITextField! {
-        didSet { password.delegate = self }
+    @IBOutlet weak var passwordTextField: UITextField! {
+        didSet { passwordTextField.delegate = self }
     }
-    @IBOutlet weak var onePasswordBtn: UIButton!
-    @IBOutlet weak var timeStackView: UIStackView!
-    @IBOutlet weak var timeSlider: UISlider!
-    @IBOutlet weak var timeLbl: UILabel!
-    @IBOutlet weak var viewsStackView: UIStackView!
-    @IBOutlet weak var viewsSlider: UISlider!
-    @IBOutlet weak var viewsLbl: UILabel!
+    @IBOutlet weak var onePasswordButton: UIButton!
+    @IBOutlet weak var passwordDaysToExpireStackView: UIStackView!
+    @IBOutlet weak var passwordDaysToExpireSlider: UISlider!
+    @IBOutlet weak var passwordDaysToExpireLabel: UILabel!
+    @IBOutlet weak var passwordViewsToExpireStackView: UIStackView!
+    @IBOutlet weak var passwordViewsToExpireSlider: UISlider!
+    @IBOutlet weak var passwordViewsToExpireLabel: UILabel!
     
-    @IBOutlet weak var optionalDeleteSwitch: UISwitch!
-    @IBOutlet weak var saveDefaultsSwitch: UISwitch!
-    @IBOutlet weak var pushButton: UIButton!
-    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    @IBOutlet weak var optionalPasswordDeleteSwitch: UISwitch!
+    @IBOutlet weak var saveDefaultSettingsSwitch: UISwitch!
+    @IBOutlet weak var pushPasswordButton: UIButton!
+    @IBOutlet weak var backgroundActivitySpinner: UIActivityIndicatorView!
     
-    private var expirationTxtField: UITextField?
-    private var expirationFieldIsAnimating = false
+    private var passwordExpirationTextField: UITextField?
+    private var passwordExpirationTextFieldIsAnimating = false
     
     //MARK:- Settings
-    private var timeToExpire: Int {
-        return Int(timeSlider.value)
+    private var passwordDaysToExpire: Int {
+        return Int(passwordDaysToExpireSlider.value)
     }
-    private var viewsToExpire: Int {
-        return Int(viewsSlider.value)
+    private var passwordViewsToExpire: Int {
+        return Int(passwordViewsToExpireSlider.value)
     }
-    private var optionalDelete: Bool {
+    private var passwordOptionalDelete: Bool {
         get {
-            return optionalDeleteSwitch.isOn
+            return optionalPasswordDeleteSwitch.isOn
         } set {
-            optionalDeleteSwitch.setOn(newValue, animated: true)
+            optionalPasswordDeleteSwitch.setOn(newValue, animated: true)
         }
     }
-    private var saveDefaults: Bool {
+    private var saveDefaultSettings: Bool {
         get {
-            return saveDefaultsSwitch.isOn
+            return saveDefaultSettingsSwitch.isOn
         } set {
-            saveDefaultsSwitch.setOn(newValue, animated: true)
+            saveDefaultSettingsSwitch.setOn(newValue, animated: true)
         }
+    }
+    
+    //MARK:- VCLC
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        passwordPusherHandler.delegate = self
+        restoreSettings()
+        addBackgroundTapGestureRecognizer()
+        addExpireLabelTapGestureRecognizer(to: passwordDaysToExpireLabel)
+        addExpireLabelTapGestureRecognizer(to: passwordViewsToExpireLabel)
+        checkOnePasswordAvailable();
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
+
     //MARK:- IBActions
-    @IBAction func findLoginFrom1Password(_ sender: UIButton) {
-        OnePasswordExtension.shared().findLogin(forURLString: URLs.onePswdSearch, for: self, sender: sender) { (loginDictionary, error) in
+    @IBAction func onePasswordButtonPressed(_ sender: UIButton) {
+        OnePasswordExtension.shared().findLogin(forURLString: URLs.onePasswordSearch, for: self, sender: sender) { (loginDictionary, error) in
             if let loginDictionary = loginDictionary {
-                self.password.text = loginDictionary[AppExtensionPasswordKey] as? String ?? nil;
+                self.passwordTextField.text = loginDictionary[AppExtensionPasswordKey] as? String ?? nil;
             }
         }
     }
-    @IBAction func timeSliderChanged(_ sender: UISlider) {
-        removeEpirationTextField()
+    @IBAction func passwordDaysToExpireSliderValueChanged(_ sender: UISlider) {
+        removeExpirationTextField()
         displaySliderInfo()
     }
-    @IBAction func viewsSliderChanged(_ sender: UISlider) {
-        removeEpirationTextField()
+    @IBAction func passwordViewsToExpireSliderValueChanged(_ sender: UISlider) {
+        removeExpirationTextField()
         displaySliderInfo()
     }
-    @IBAction func pushButtonDidTap(_ sender: UIButton) {
-        performPush()
+    @IBAction func pushPasswordButtonPressed(_ sender: UIButton) {
+        performPasswordPush()
     }
     
     //MARK:- Model
     private let passwordPusherHandler = PasswordPusherHandler()
-    private let userDefaultsManager = PasswordPusherUserDefaultsManager()
+    private let settingsManager = PasswordPusherSettingsManager()
 
-    //MARK:- Functions
-    private func performPush() {
-        guard password!.text != nil && password!.text! != "" else {
-            self.present(showBasicAlert(message: Strings.noPswdError), animated: true, completion: nil)
+    //MARK:- Private Functions
+    private func performPasswordPush() {
+        guard let passwordText = passwordTextField!.text?.trimmingCharacters(in: .whitespaces), !passwordText.isEmpty else {
+            showBasicAlert(message: Strings.noPasswordError)
             return
         }
         toggleSpinner(on: true)
-        let myPassword = password!.text!
-        passwordPusherHandler.handlePush(password: myPassword, expireDays: timeToExpire, expireViews: viewsToExpire)
-        saveUserDefaults()
+        passwordPusherHandler.handlePush(password: passwordText, expireDays: passwordDaysToExpire, expireViews: passwordViewsToExpire)
+        saveSettings()
     }
     
     private func handleSessionError(_ message: String) {
         toggleSpinner(on: false)
-        self.present(showBasicAlert(message: message), animated: true)
+        showBasicAlert(message: message)
     }
     
-    private func restoreDefaults() {
-        password!.text = nil
+    private func restoreSettings() {
+        passwordTextField!.text = nil
         
-        let defaults = userDefaultsManager.restoreDefaults()
-        viewsSlider.setValue(Float(defaults.viewsToExpire), animated: true)
-        timeSlider.setValue(Float(defaults.timeToExpire), animated: true)
-        optionalDelete = defaults.optionalDelete
-        saveDefaults = defaults.saveDefaults
+        let settings = settingsManager.restoreSettings()
+        passwordViewsToExpireSlider.setValue(Float(settings.viewsToExpire), animated: true)
+        passwordDaysToExpireSlider.setValue(Float(settings.timeToExpire), animated: true)
+        passwordOptionalDelete = settings.optionalDelete
+        saveDefaultSettings = settings.saveDefaults
         
         displaySliderInfo()
     }
     
-    private func saveUserDefaults() {
-        let defaults = DefaultSettings(time: timeToExpire, views: viewsToExpire, delete: optionalDelete, save: saveDefaults)
-        userDefaultsManager.saveUserDefaults(defaults: defaults)
+    private func saveSettings() {
+        settingsManager.saveUserDefaults(time: passwordDaysToExpire, views: passwordViewsToExpire, delete: passwordOptionalDelete, save: saveDefaultSettings)
     }
     
     private func displaySliderInfo() {
-        timeLbl.text = "\(timeToExpire) Days"
-        viewsLbl.text = "\(viewsToExpire) Views"
+        passwordDaysToExpireLabel.text = "\(passwordDaysToExpire) Days"
+        passwordViewsToExpireLabel.text = "\(passwordViewsToExpire) Views"
     }
     
     private func toggleSpinner(on: Bool) {
         if on {
-            pushButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0), for: .normal)
-            spinner.startAnimating()
+            pushPasswordButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 0), for: .normal)
+            backgroundActivitySpinner.startAnimating()
         } else {
-            pushButton.setTitleColor(UIColor(named: "Button Text"), for: .normal)
-            spinner.stopAnimating()
+            pushPasswordButton.setTitleColor(UIColor(named: "Button Text"), for: .normal)
+            backgroundActivitySpinner.stopAnimating()
         }
     }
     
-    private func checkOnePswdAvailable() {
-        onePasswordBtn.isHidden = (false == OnePasswordExtension.shared().isAppExtensionAvailable())
+    private func checkOnePasswordAvailable() {
+        onePasswordButton.isHidden = !OnePasswordExtension.shared().isAppExtensionAvailable()
     }
     
-    private func addBgTapRecognizer() {
-        //Calls func to dismiss keyboard and reveal rest of the screen when background is tapped
+    private func addBackgroundTapGestureRecognizer() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        self.view.addGestureRecognizer(tap)
+        view.addGestureRecognizer(tap)
     }
     
-    //Gesture recognizer for expiration labels
-    private func addLblTapRecognizer(to label: UILabel) {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(displayExpirationField(recognizer:)))
-        label.addGestureRecognizer(tap)
+    private func addExpireLabelTapGestureRecognizer(to label: UILabel) {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(displayExpirationField(recognizer:)))
+        label.addGestureRecognizer(tapGestureRecognizer)
     }
     
     //displays UITextField to enter expiration days or views
     @objc private func displayExpirationField(recognizer: UITapGestureRecognizer) {
-        removeEpirationTextField()
+        removeExpirationTextField()
        
         //avoid multiple text fields being put on screen at once
-        guard !expirationFieldIsAnimating else {return}
-        expirationFieldIsAnimating = true
+        guard let sender = recognizer.view as? UILabel, !passwordExpirationTextFieldIsAnimating else {return}
+        passwordExpirationTextFieldIsAnimating = true
         
-        if let sender = recognizer.view as? UILabel {
-            expirationTxtField = UITextField(frame: sender.frame)
-            expirationTxtField!.delegate = self
-            expirationTxtField!.backgroundColor = UIColor(named: "TextField BG")
-            expirationTxtField!.textAlignment = .center
-            expirationTxtField!.placeholder = sender == timeLbl ? "\(timeToExpire) Days" : "\(viewsToExpire) Views"
-            expirationTxtField!.keyboardType = .numberPad
-            //Tag says which slider to update on textFieldDidEndEditing
-            expirationTxtField!.tag = sender == timeLbl ? 1 : 2
-            expirationTxtField!.alpha = 0
-            view.addSubview(expirationTxtField!)
-            matchConstraints(of: expirationTxtField!, to: sender)
-            UIView.animate(withDuration: AnimationConstants.txtFieldFadeIn, animations: {
-                self.expirationTxtField!.alpha = 1
-            }) { (complete) in
-                if complete {
-                    self.expirationFieldIsAnimating = false
-                    self.expirationTxtField!.becomeFirstResponder()
-                }
+        let placeholder = sender == passwordDaysToExpireLabel ? "\(passwordDaysToExpire) Days" : "\(passwordViewsToExpire) Views"
+        let tag = sender == passwordDaysToExpireLabel ? TextFieldTag.daysToExpire.rawValue : TextFieldTag.viewsToExpire.rawValue
+        passwordExpirationTextField = createExpirationTextField(placeholder: placeholder, tag: tag)
+        view.addSubview(passwordExpirationTextField!)
+        matchConstraints(of: passwordExpirationTextField!, to: sender)
+        UIView.animate(withDuration: AnimationConstants.txtFieldFadeIn, animations: { [weak self] in
+            self?.passwordExpirationTextField!.alpha = 1
+        }) { (complete) in
+            if complete {
+                self.passwordExpirationTextFieldIsAnimating = false
+                self.passwordExpirationTextField!.becomeFirstResponder()
             }
         }
     }
     
+    private func createExpirationTextField(placeholder: String, tag: Int) -> UITextField {
+        let textField = UITextField()
+        textField.placeholder = placeholder
+        textField.tag = tag
+        textField.delegate = self
+        textField.backgroundColor = UIColor(named: "TextField BG")
+        textField.textAlignment = .center
+        textField.keyboardType = .numberPad
+        textField.alpha = 0
+        return textField
+    }
+    
     // removes any existing expiration text field
-    private func removeEpirationTextField() {
-        if let existingField = expirationTxtField {
+    private func removeExpirationTextField() {
+        if let existingField = passwordExpirationTextField {
             existingField.endEditing(true)
         }
     }
@@ -189,67 +204,51 @@ class PasswordPusherViewController: UIViewController {
     // called after mail VC is dismissed
     func mailFinished(sent: Bool) {
         if sent {
-            displayMailSuccessMsg()
-            restoreDefaults()
-        } else {
-            present(showBasicAlert(message: Strings.mailFail), animated: true, completion: nil)
+            displayMailSuccessMessage()
+            restoreSettings()
+            return
         }
+        showBasicAlert(message: Strings.emailFailureMessage)
     }
     
     //displays a success message after sending email
-    func displayMailSuccessMsg() {
-        let successLbl = UILabel(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize.zero))
-        successLbl.backgroundColor = UIColor(named: "Push Button BG")
-        successLbl.textColor = UIColor(named: "Body Text")
-        successLbl.font = UIFont.preferredFont(forTextStyle: .body).withSize(Constants.successMsgFontSize)
-        successLbl.numberOfLines = 0
-        successLbl.textAlignment = .center
-        successLbl.text = Strings.successMsg
-        successLbl.alpha = 0
+    func displayMailSuccessMessage() {
+        let successLabel = UILabel()
+        successLabel.backgroundColor = UIColor(named: "Push Button BG")
+        successLabel.textColor = UIColor(named: "Body Text")
+        successLabel.font = UIFont.preferredFont(forTextStyle: .body).withSize(Constants.successMsgFontSize)
+        successLabel.numberOfLines = 0
+        successLabel.textAlignment = .center
+        successLabel.text = Strings.passwordSuccessfullySentMessage
+        successLabel.alpha = 0
         
-        successLbl.translatesAutoresizingMaskIntoConstraints = false
-        let msgCenterX = successLbl.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        let msgCenterY = successLbl.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: Constants.successMsgYConstant)
-        let msgWidth = successLbl.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1)
+        successLabel.translatesAutoresizingMaskIntoConstraints = false
+        let msgCenterX = successLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        let msgCenterY = successLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: Constants.successMsgYConstant)
+        let msgWidth = successLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1)
         let msgConstraints = [msgCenterX, msgCenterY, msgWidth]
         
-        view.addSubview(successLbl)
+        view.addSubview(successLabel)
         NSLayoutConstraint.activate(msgConstraints)
         
         UIView.animate(withDuration: AnimationConstants.successMsgFade, animations: {
-            successLbl.alpha = 1
+            successLabel.alpha = 1
         }) { (complete) in
             if complete {
                 UIView.animateKeyframes(
                     withDuration: AnimationConstants.successMsgFade,
                     delay: AnimationConstants.successMsgLinger, options: [],
                     animations: {
-                        successLbl.alpha = 0
+                        successLabel.alpha = 0
                     },
                     completion: { (complete) in
                     if complete {
                         NSLayoutConstraint.deactivate(msgConstraints)
-                        successLbl.removeFromSuperview()
+                        successLabel.removeFromSuperview()
                     }
                 })
             }
         }
-    }
-
-    //MARK:- VCLC
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        passwordPusherHandler.delegate = self
-        restoreDefaults()
-        addBgTapRecognizer()
-        addLblTapRecognizer(to: timeLbl)
-        addLblTapRecognizer(to: viewsLbl)
-        //TODO: fix checkOnePswdAvailable
-//        checkOnePswdAvailable();
-        setNeedsStatusBarAppearanceUpdate()
-    }
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
 }
 
@@ -261,14 +260,14 @@ extension PasswordPusherViewController: PasswordPusherHandlerDelegate {
     
     func handleSessionError(message: String) {
         toggleSpinner(on: false)
-        self.present(showBasicAlert(message: message), animated: true, completion: nil)
+        showBasicAlert(message: message)
     }
 }
 
 extension PasswordPusherViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == expirationTxtField {
-            let sliderToUpdate = textField.tag == 1 ? timeSlider : viewsSlider
+        if textField == passwordExpirationTextField {
+            let sliderToUpdate = textField.tag == TextFieldTag.daysToExpire.rawValue ? passwordDaysToExpireSlider : passwordViewsToExpireSlider
             if let textVal = textField.text, let numberVal = Int(textVal) {
                 sliderToUpdate?.setValue(Float(exactly: numberVal)!, animated: true)
                 displaySliderInfo()
@@ -295,8 +294,8 @@ extension PasswordPusherViewController: UITextFieldDelegate {
     
     //called when view background is tapped
     @objc private func dismissKeyboard() {
-        password.resignFirstResponder()
-        expirationTxtField?.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        passwordExpirationTextField?.resignFirstResponder()
     }
 }
 
@@ -313,12 +312,17 @@ extension PasswordPusherViewController {
     }
     
     private struct URLs {
-        static let onePswdSearch = "www.pwpush.com"
+        static let onePasswordSearch = "www.pwpush.com"
     }
     
     private struct Strings {
-        static let successMsg = "Your password has been sent!"
-        static let mailFail = "Mail could not be sent."
-        static let noPswdError = "Please enter a password"
+        static let passwordSuccessfullySentMessage = "Your password has been sent!"
+        static let emailFailureMessage = "Mail could not be sent."
+        static let noPasswordError = "Please enter a password. It needs to have at least one character."
+    }
+    
+    private enum TextFieldTag: Int {
+        case daysToExpire = 1000
+        case viewsToExpire = 1001
     }
 }

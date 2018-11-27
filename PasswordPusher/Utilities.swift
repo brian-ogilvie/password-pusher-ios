@@ -14,12 +14,13 @@
 //
 import UIKit
 
-func showBasicAlert(message: String) -> UIAlertController {
-    let alertVC = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-    let dismiss = UIAlertAction(title: "OK", style: .default, handler: nil)
-    alertVC.addAction(dismiss)
-    
-    return alertVC
+extension UIViewController {
+    func showBasicAlert(message: String) {
+        let alertVC = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let dismiss = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertVC.addAction(dismiss)
+        self.present(alertVC, animated: true)
+    }
 }
 
 //constrains view1 to exact frame of view2
