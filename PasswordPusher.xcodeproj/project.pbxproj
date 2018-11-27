@@ -10,6 +10,7 @@
 		851FF21021685A4C0016462A /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 851FF20E21685A4B0016462A /* OnePasswordExtension.m */; };
 		851FF21121685A4C0016462A /* 1Password.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 851FF20F21685A4C0016462A /* 1Password.xcassets */; };
 		85272ADE21AD01ED00C31747 /* HttpParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85272ADD21AD01ED00C31747 /* HttpParameters.swift */; };
+		85272AE021AD104800C31747 /* UrlSessionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85272ADF21AD104800C31747 /* UrlSessionError.swift */; };
 		8542AC6C216304CD002845CF /* PwPushViewController+MessageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8542AC6B216304CD002845CF /* PwPushViewController+MessageUI.swift */; };
 		8542AC6E216317EB002845CF /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8542AC6D216317EB002845CF /* Utilities.swift */; };
 		8569DE0A2173870E008E1EBB /* BigCaslon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8569DE092173870E008E1EBB /* BigCaslon.ttf */; };
@@ -30,6 +31,7 @@
 		851FF20E21685A4B0016462A /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
 		851FF20F21685A4C0016462A /* 1Password.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = 1Password.xcassets; sourceTree = "<group>"; };
 		85272ADD21AD01ED00C31747 /* HttpParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpParameters.swift; sourceTree = "<group>"; };
+		85272ADF21AD104800C31747 /* UrlSessionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlSessionError.swift; sourceTree = "<group>"; };
 		8542AC6B216304CD002845CF /* PwPushViewController+MessageUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PwPushViewController+MessageUI.swift"; sourceTree = "<group>"; };
 		8542AC6D216317EB002845CF /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		8569DE092173870E008E1EBB /* BigCaslon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BigCaslon.ttf; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				857D484C216B77BB00C639FC /* PasswordPushObject.swift */,
 				85272ADD21AD01ED00C31747 /* HttpParameters.swift */,
 				85BD7A5D21A3AA5C008D1A38 /* PasswordPusherHandler.swift */,
+				85272ADF21AD104800C31747 /* UrlSessionError.swift */,
 				8593F4C121A3E1B000909224 /* PasswordPusherSettingsManager.swift */,
 				857CDE64219D001B0089AE1E /* Resources */,
 				85F0E41A215DC3DD00D01FD4 /* Supporting Files */,
@@ -207,6 +210,7 @@
 			files = (
 				8593F4C221A3E1B000909224 /* PasswordPusherSettingsManager.swift in Sources */,
 				85BD7A5E21A3AA5C008D1A38 /* PasswordPusherHandler.swift in Sources */,
+				85272AE021AD104800C31747 /* UrlSessionError.swift in Sources */,
 				85272ADE21AD01ED00C31747 /* HttpParameters.swift in Sources */,
 				85F0E40B215DC34500D01FD4 /* PasswordPusherViewController.swift in Sources */,
 				8542AC6C216304CD002845CF /* PwPushViewController+MessageUI.swift in Sources */,

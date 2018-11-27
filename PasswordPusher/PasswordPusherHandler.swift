@@ -16,11 +16,9 @@
 import Foundation
 
 class PasswordPusherHandler {
-    weak var delegate: PasswordPusherHandlerDelegate?
-    
-    func handlePush(password: String, expireDays: Int, expireViews: Int) {
+    func handlePush(password: String, expireDays: Int, expireViews: Int, success: @escaping (_ url: String)->Void, failure: @escaping (_ error: UrlSessionError)->Void) {
         guard let url = URL(string: URLs.arctouchAPI) else {
-            print("Unable to create url")
+            failure(UrlSessionError.urlCreationError)
             return
         }
         
@@ -31,30 +29,24 @@ class PasswordPusherHandler {
         
         let httpParameters = HttpParameters(payload: password, expireAfterDays: expireDays, expireAfterViews: expireViews)
         guard let httpBody = try? JSONEncoder().encode(httpParameters) else {
-            print("Unable to create httpBody")
-           return
+            failure(UrlSessionError.httpBodyCreationError)
+            return
         }
         request.httpBody = httpBody
         
         let session = URLSession.shared
-        session.dataTask(with: request) { [weak self] (data, response, error) in
+        session.dataTask(with: request) { (data, response, error) in
             if response == nil {
-                DispatchQueue.main.async {
-                    self?.delegate?.handleSessionError(message: Strings.noServerResponse)
-                }
+                failure(UrlSessionError.noServerResponse)
+                return
             }
-            if let data = data {
-                do {
-                    let pwPushObject = try JSONDecoder().decode(PasswordPushObject.self, from: data)
-                    let urlToSend = URLs.arctouchPrefix + pwPushObject.urlToken
-                    DispatchQueue.main.async {
-                        self?.delegate?.handleSessionSuccess(url: urlToSend)
-                    }
-                } catch let sessionError {
-                    DispatchQueue.main.async {
-                        self?.delegate?.handleSessionError(message: String(describing: sessionError))
-                    }
-                }
+            guard let data = data else { failure(UrlSessionError.emptyDataInResponse); return }
+            do {
+                let pwPushObject = try JSONDecoder().decode(PasswordPushObject.self, from: data)
+                let urlToSend = URLs.arctouchPrefix + pwPushObject.urlToken
+                success(urlToSend)
+            } catch let sessionError {
+                failure(UrlSessionError.sessionError(error: sessionError))
             }
         }.resume()
     }
@@ -71,9 +63,4 @@ extension PasswordPusherHandler {
     private struct Strings {
         static let noServerResponse = "Unable to get response from server."
     }
-}
-
-protocol PasswordPusherHandlerDelegate: AnyObject {
-    func handleSessionSuccess(url: String)
-    func handleSessionError(message: String)
 }

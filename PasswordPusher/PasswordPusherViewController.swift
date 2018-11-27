@@ -61,7 +61,6 @@ class PasswordPusherViewController: UIViewController {
     //MARK:- VCLC
     override func viewDidLoad() {
         super.viewDidLoad()
-        passwordPusherHandler.delegate = self
         restoreSettings()
         addBackgroundTapGestureRecognizer()
         addExpireLabelTapGestureRecognizer(to: passwordDaysToExpireLabel)
@@ -105,13 +104,28 @@ class PasswordPusherViewController: UIViewController {
             return
         }
         toggleSpinner(on: true)
-        passwordPusherHandler.handlePush(password: passwordText, expireDays: passwordDaysToExpire, expireViews: passwordViewsToExpire)
+        passwordPusherHandler.handlePush(
+            password: passwordText,
+            expireDays: passwordDaysToExpire,
+            expireViews: passwordViewsToExpire,
+            success: handleSessionSuccess(_:),
+            failure: handleSessionError(_:)
+        )
         saveSettings()
     }
     
-    private func handleSessionError(_ message: String) {
-        toggleSpinner(on: false)
-        showBasicAlert(message: message)
+    private func handleSessionSuccess(_ url: String) {
+        DispatchQueue.main.async { [weak self] in
+            self?.toggleSpinner(on: false)
+            self?.presentMailComposeVC(urlToEmail: url)
+        }
+    }
+    
+    private func handleSessionError(_ error: UrlSessionError) {
+        DispatchQueue.main.async { [weak self] in
+            self?.toggleSpinner(on: false)
+            self?.showBasicAlert(message: error.localizedDescription)
+        }
     }
     
     private func restoreSettings() {
@@ -249,18 +263,6 @@ class PasswordPusherViewController: UIViewController {
                 })
             }
         }
-    }
-}
-
-extension PasswordPusherViewController: PasswordPusherHandlerDelegate {
-    func handleSessionSuccess(url: String) {
-        toggleSpinner(on: false)
-        self.presentMailComposeVC(urlToEmail: url)
-    }
-    
-    func handleSessionError(message: String) {
-        toggleSpinner(on: false)
-        showBasicAlert(message: message)
     }
 }
 
