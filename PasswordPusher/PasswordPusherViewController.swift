@@ -228,35 +228,31 @@ class PasswordPusherViewController: UIViewController {
         }
     }
     
-    //only show this alert once
+    //only show Clipboard alert once
     private var pasteHasBeenOffered = false
     
-    //detects items in device clipboard
     private func detectClipboardContent() {
         let pasteboard = UIPasteboard.general
-        if let pasteboardString = pasteboard.string {
-            if !pasteHasBeenOffered {
-                offerToPaste(string: pasteboardString)
-                pasteHasBeenOffered = true
-            }
-        }
+        guard !pasteHasBeenOffered, let pasteboardString = pasteboard.string else { return }
+        offerToPasteFromClipboard(pasteboardString)
+        pasteHasBeenOffered = true
     }
     
-    private func offerToPaste(string: String) {
+    private func offerToPasteFromClipboard(_ pasteboardString: String) {
         let title = "Use Clipboard?"
         let message = "You currently have text in your clipboard. Would you like to use your clipboard as input?"
         let yesString = "Use Clipboard"
         let noString = "Don't Use Clipboard"
-        let pasteVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let yes = UIAlertAction(title: yesString, style: .default) { [weak self] (action) in
-            self?.passwordTextField.text = string
+        let pasteAlertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: yesString, style: .default) { [weak self] (action) in
+            self?.passwordTextField.text = pasteboardString
         }
-        pasteVC.addAction(yes)
-        let no = UIAlertAction(title: noString, style: .default, handler: nil)
-        pasteVC.addAction(no)
-        pasteVC.preferredAction = yes
+        pasteAlertController.addAction(yesAction)
+        let noAction = UIAlertAction(title: noString, style: .default, handler: nil)
+        pasteAlertController.addAction(noAction)
+        pasteAlertController.preferredAction = yesAction
         
-        present(pasteVC, animated: true, completion: nil)
+        present(pasteAlertController, animated: true, completion: nil)
     }
 
     
