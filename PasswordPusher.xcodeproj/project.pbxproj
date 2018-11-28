@@ -120,6 +120,7 @@
 				8542AC6B216304CD002845CF /* PwPushViewController+MessageUI.swift */,
 				8542AC6D216317EB002845CF /* Utilities.swift */,
 				85F0E408215DC34500D01FD4 /* AppDelegate.swift */,
+				85F0E411215DC34A00D01FD4 /* LaunchScreen.storyboard */,
 				857CDE64219D001B0089AE1E /* Resources */,
 				85F0E41A215DC3DD00D01FD4 /* Supporting Files */,
 				857CDE65219D016E0089AE1E /* OnePassword */,
@@ -130,7 +131,6 @@
 		85F0E41A215DC3DD00D01FD4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				85F0E411215DC34A00D01FD4 /* LaunchScreen.storyboard */,
 				85F0E414215DC34A00D01FD4 /* Info.plist */,
 			);
 			path = "Supporting Files";

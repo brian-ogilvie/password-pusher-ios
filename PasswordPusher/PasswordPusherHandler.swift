@@ -16,7 +16,7 @@
 import Foundation
 
 class PasswordPusherHandler {
-    func handlePush(password: String, expireDays: Int, expireViews: Int, success: @escaping (_ url: String)->Void, failure: @escaping (_ error: UrlSessionError)->Void) {
+    func handlePush(password: String, expireDays: Int, expireViews: Int, success: @escaping (_ url: String) -> Void, failure: @escaping (_ error: UrlSessionError) -> Void) {
         guard let url = URL(string: URLs.arctouchAPI) else {
             failure(UrlSessionError.urlCreationError)
             return
@@ -42,11 +42,11 @@ class PasswordPusherHandler {
             }
             guard let data = data else { failure(UrlSessionError.emptyDataInResponse); return }
             do {
-                let pwPushObject = try JSONDecoder().decode(PasswordPushObject.self, from: data)
-                let urlToSend = URLs.arctouchPrefix + pwPushObject.urlToken
+                let passwordPushObject = try JSONDecoder().decode(PasswordPushObject.self, from: data)
+                let urlToSend = URLs.arctouchPrefix + passwordPushObject.urlToken
                 success(urlToSend)
-            } catch let sessionError {
-                failure(UrlSessionError.sessionError(error: sessionError))
+            } catch {
+                failure(UrlSessionError.unknownSessionError)
             }
         }.resume()
     }

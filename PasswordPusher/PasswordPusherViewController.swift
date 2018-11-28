@@ -116,13 +116,13 @@ class PasswordPusherViewController: UIViewController {
             success: handleSessionSuccess(_:),
             failure: handleSessionError(_:)
         )
-        saveSettings()
     }
     
     private func handleSessionSuccess(_ url: String) {
         DispatchQueue.main.async { [weak self] in
             self?.toggleSpinner(on: false)
             self?.presentMailComposeVC(urlToEmail: url)
+            self?.saveSettings()
         }
     }
     

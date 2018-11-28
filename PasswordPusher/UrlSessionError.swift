@@ -13,5 +13,5 @@ enum UrlSessionError: Error {
     case httpBodyCreationError// = "Unable to create httpBody"
     case noServerResponse// = "Unable to get response from server"
     case emptyDataInResponse// = "Server response contained no data"
-    case sessionError(error: Error)// = "Unknown session error"
+    case unknownSessionError// = "Unknown session error"
 }
