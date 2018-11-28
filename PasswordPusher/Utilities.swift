@@ -2,18 +2,25 @@
 //  Utilities.swift
 //  PasswordPusher
 //
-//  Created by Brian Ogilvie on 10/1/18.
-//  Copyright © 2018 Brian Ogilvie Development. All rights reserved.
+// Copyright 2018 ArcTouch, LLC.
+// All rights reserved.
 //
-
+// This file, its contents, concepts, methods, behavior, and operation
+// (collectively the "Software") are protected by trade secret, patent,
+// and copyright laws. The use of the Software is governed by a license
+// agreement. Disclosure of the Software to third parties, in any form,
+// in whole or in part, is expressly prohibited except as authorized by
+// the license agreement.
+//
 import UIKit
 
-func showBasicAlert(message: String) -> UIAlertController {
-    let alertVC = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-    let dismiss = UIAlertAction(title: "OK", style: .default, handler: nil)
-    alertVC.addAction(dismiss)
-    
-    return alertVC
+extension UIViewController {
+    func showBasicAlert(message: String) {
+        let alertVC = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let dismiss = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertVC.addAction(dismiss)
+        self.present(alertVC, animated: true)
+    }
 }
 
 //constrains view1 to exact frame of view2

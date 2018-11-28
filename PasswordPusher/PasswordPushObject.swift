@@ -1,14 +1,21 @@
 //
-//  PwPushObject.swift
+//  PasswordPushObject.swift
 //  PasswordPusher
 //
-//  Created by Brian Ogilvie on 10/8/18.
-//  Copyright © 2018 Brian Ogilvie Development. All rights reserved.
+// Copyright 2018 ArcTouch, LLC.
+// All rights reserved.
+//
+// This file, its contents, concepts, methods, behavior, and operation
+// (collectively the "Software") are protected by trade secret, patent,
+// and copyright laws. The use of the Software is governed by a license
+// agreement. Disclosure of the Software to third parties, in any form,
+// in whole or in part, is expressly prohibited except as authorized by
+// the license agreement.
 //
 
 import Foundation
 
-struct PwPushObject: Decodable {
+struct PasswordPushObject: Decodable {
     var created: String
     var deleted: Bool
     var expireDays: Int
