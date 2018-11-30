@@ -12,7 +12,7 @@
 		85272ADE21AD01ED00C31747 /* HttpParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85272ADD21AD01ED00C31747 /* HttpParameters.swift */; };
 		85272AE021AD104800C31747 /* UrlSessionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85272ADF21AD104800C31747 /* UrlSessionError.swift */; };
 		85272AE221AD1D0400C31747 /* OnePasswordHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85272AE121AD1D0400C31747 /* OnePasswordHandler.swift */; };
-		8542AC6C216304CD002845CF /* PwPushViewController+MessageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8542AC6B216304CD002845CF /* PwPushViewController+MessageUI.swift */; };
+		85272AE921AF058900C31747 /* PwPushViewController+MessageUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85272AE821AF058900C31747 /* PwPushViewController+MessageUI.swift */; };
 		8542AC6E216317EB002845CF /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8542AC6D216317EB002845CF /* Utilities.swift */; };
 		8569DE0A2173870E008E1EBB /* BigCaslon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8569DE092173870E008E1EBB /* BigCaslon.ttf */; };
 		857D484D216B77BB00C639FC /* PasswordPushObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D484C216B77BB00C639FC /* PasswordPushObject.swift */; };
@@ -34,7 +34,7 @@
 		85272ADD21AD01ED00C31747 /* HttpParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpParameters.swift; sourceTree = "<group>"; };
 		85272ADF21AD104800C31747 /* UrlSessionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlSessionError.swift; sourceTree = "<group>"; };
 		85272AE121AD1D0400C31747 /* OnePasswordHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnePasswordHandler.swift; sourceTree = "<group>"; };
-		8542AC6B216304CD002845CF /* PwPushViewController+MessageUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PwPushViewController+MessageUI.swift"; sourceTree = "<group>"; };
+		85272AE821AF058900C31747 /* PwPushViewController+MessageUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PwPushViewController+MessageUI.swift"; sourceTree = "<group>"; };
 		8542AC6D216317EB002845CF /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		8569DE092173870E008E1EBB /* BigCaslon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BigCaslon.ttf; sourceTree = "<group>"; };
 		857D484C216B77BB00C639FC /* PasswordPushObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordPushObject.swift; sourceTree = "<group>"; };
@@ -116,8 +116,8 @@
 				857D484C216B77BB00C639FC /* PasswordPushObject.swift */,
 				85272ADD21AD01ED00C31747 /* HttpParameters.swift */,
 				85272ADF21AD104800C31747 /* UrlSessionError.swift */,
+				85272AE821AF058900C31747 /* PwPushViewController+MessageUI.swift */,
 				8593F4C121A3E1B000909224 /* PasswordPusherSettingsManager.swift */,
-				8542AC6B216304CD002845CF /* PwPushViewController+MessageUI.swift */,
 				8542AC6D216317EB002845CF /* Utilities.swift */,
 				85F0E408215DC34500D01FD4 /* AppDelegate.swift */,
 				85F0E411215DC34A00D01FD4 /* LaunchScreen.storyboard */,
@@ -217,11 +217,11 @@
 				85272AE221AD1D0400C31747 /* OnePasswordHandler.swift in Sources */,
 				85272ADE21AD01ED00C31747 /* HttpParameters.swift in Sources */,
 				85F0E40B215DC34500D01FD4 /* PasswordPusherViewController.swift in Sources */,
-				8542AC6C216304CD002845CF /* PwPushViewController+MessageUI.swift in Sources */,
 				851FF21021685A4C0016462A /* OnePasswordExtension.m in Sources */,
 				857D484D216B77BB00C639FC /* PasswordPushObject.swift in Sources */,
 				8542AC6E216317EB002845CF /* Utilities.swift in Sources */,
 				85F0E409215DC34500D01FD4 /* AppDelegate.swift in Sources */,
+				85272AE921AF058900C31747 /* PwPushViewController+MessageUI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
