@@ -222,6 +222,7 @@
 				857D484D216B77BB00C639FC /* PasswordPushObject.swift in Sources */,
 				8542AC6E216317EB002845CF /* Utilities.swift in Sources */,
 				85F0E409215DC34500D01FD4 /* AppDelegate.swift in Sources */,
+				85272AE921AF058900C31747 /* PwPushViewController+MessageUI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

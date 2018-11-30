@@ -68,6 +68,10 @@ class PasswordPusherViewController: UIViewController {
         checkOnePasswordAvailable();
         setNeedsStatusBarAppearanceUpdate()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        detectClipboardContent()
+    }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -271,6 +275,34 @@ class PasswordPusherViewController: UIViewController {
             }
         }
     }
+  
+    //only show Clipboard alert once
+    private var pasteHasBeenOffered = false
+    
+    private func detectClipboardContent() {
+        let pasteboard = UIPasteboard.general
+        guard !pasteHasBeenOffered, let pasteboardString = pasteboard.string else { return }
+        offerToPasteFromClipboard(pasteboardString)
+        pasteHasBeenOffered = true
+    }
+    
+    private func offerToPasteFromClipboard(_ pasteboardString: String) {
+        let title = "Use Clipboard?"
+        let message = "You currently have text in your clipboard. Would you like to use your clipboard as input?"
+        let yesString = "Use Clipboard"
+        let noString = "Don't Use Clipboard"
+        let pasteAlertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: yesString, style: .default) { [weak self] (action) in
+            self?.passwordTextField.text = pasteboardString
+        }
+        pasteAlertController.addAction(yesAction)
+        let noAction = UIAlertAction(title: noString, style: .default, handler: nil)
+        pasteAlertController.addAction(noAction)
+        pasteAlertController.preferredAction = yesAction
+        
+        present(pasteAlertController, animated: true, completion: nil)
+    }
+
     
     private func createSuccessMessageLabel(with text: String) -> UILabel {
         let successLabel = UILabel()
