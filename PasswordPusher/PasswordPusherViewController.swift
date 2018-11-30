@@ -112,6 +112,7 @@ class PasswordPusherViewController: UIViewController {
             showBasicAlert(message: Strings.noPasswordError)
             return
         }
+        dismissKeyboard()
         toggleSpinner(on: true)
         passwordPusherHandler.handlePush(
             password: passwordText,
@@ -125,8 +126,7 @@ class PasswordPusherViewController: UIViewController {
     private func handleSessionSuccess(_ url: String) {
         DispatchQueue.main.async { [weak self] in
             self?.toggleSpinner(on: false)
-            self?.presentMailComposeVC(urlToEmail: url)
-            self?.saveSettings()
+            self?.shareURL(url)
         }
     }
     
@@ -136,6 +136,29 @@ class PasswordPusherViewController: UIViewController {
             self?.showBasicAlert(message: error.localizedDescription)
         }
     }
+    
+    private func shareURL(_ urlString: String) {
+        assert(URL(string: urlString) != nil, Strings.invalidUrlErrorMessage)
+        let itemProvider = SharePasswordActivityItemProvider(urlToShare: urlString)
+        let shareSheet = UIActivityViewController(activityItems: [itemProvider], applicationActivities: nil)
+        shareSheet.completionWithItemsHandler = { [weak self] (activityType: UIActivity.ActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
+            if !completed {
+                self?.showBasicAlert(message: Strings.passwordNotShared)
+            } else {
+                self?.displayShareSuccessMessage()
+                self?.saveSettings()
+                self?.restoreSettings()
+            }
+        }
+        present(shareSheet, animated: true, completion: nil)
+        //activityVC is presented inside popoverVC on iPad
+        if let popOver = shareSheet.popoverPresentationController {
+            popOver.sourceView = view
+            popOver.sourceRect = pushPasswordButton.frame
+        }
+    }
+    
+
     
     private func restoreSettings() {
         passwordTextField!.text = nil
@@ -199,7 +222,7 @@ class PasswordPusherViewController: UIViewController {
         passwordExpirationTextField = createExpirationTextField(placeholder: placeholder, tag: tag)
         view.addSubview(passwordExpirationTextField!)
         matchConstraints(of: passwordExpirationTextField!, to: sender)
-        UIView.animate(withDuration: AnimationConstants.txtFieldFadeIn, animations: { [weak self] in
+        UIView.animate(withDuration: AnimationConstants.textFieldFadeIn, animations: { [weak self] in
             self?.passwordExpirationTextField!.alpha = 1
         }) { (complete) in
             if complete {
@@ -221,13 +244,38 @@ class PasswordPusherViewController: UIViewController {
         return textField
     }
     
-    // removes any existing expiration text field
     private func removeExpirationTextField() {
         if let existingField = passwordExpirationTextField {
             existingField.endEditing(true)
         }
     }
     
+    private func displayShareSuccessMessage() {
+        let successMessageLabel = createSuccessMessageLabel(with: Strings.passwordSuccessfullySharedMessage)
+        view.addSubview(successMessageLabel)
+        let successMessageLabelConstraints = createSuccessLabelConstraints(label: successMessageLabel)
+        NSLayoutConstraint.activate(successMessageLabelConstraints)
+        
+        UIView.animate(withDuration: AnimationConstants.successMessageFade, animations: {
+            successMessageLabel.alpha = 1
+        }) { (complete) in
+            if complete {
+                UIView.animate(
+                    withDuration: AnimationConstants.successMessageFade,
+                    delay: AnimationConstants.successMessageLinger, options: [],
+                    animations: {
+                        successMessageLabel.alpha = 0
+                },
+                    completion: { (complete) in
+                        if complete {
+                            NSLayoutConstraint.deactivate(successMessageLabelConstraints)
+                            successMessageLabel.removeFromSuperview()
+                        }
+                })
+            }
+        }
+    }
+  
     //only show Clipboard alert once
     private var pasteHasBeenOffered = false
     
@@ -256,54 +304,25 @@ class PasswordPusherViewController: UIViewController {
     }
 
     
-    // called after mail VC is dismissed
-    func mailFinished(sent: Bool) {
-        if sent {
-            displayMailSuccessMessage()
-            restoreSettings()
-            return
-        }
-        showBasicAlert(message: Strings.emailFailureMessage)
-    }
-    
-    //displays a success message after sending email
-    func displayMailSuccessMessage() {
+    private func createSuccessMessageLabel(with text: String) -> UILabel {
         let successLabel = UILabel()
         successLabel.backgroundColor = UIColor(named: "Push Button BG")
         successLabel.textColor = UIColor(named: "Body Text")
-        successLabel.font = UIFont.preferredFont(forTextStyle: .body).withSize(Constants.successMsgFontSize)
+        successLabel.font = UIFont.preferredFont(forTextStyle: .body).withSize(Constants.successMessageFontSize)
         successLabel.numberOfLines = 0
         successLabel.textAlignment = .center
-        successLabel.text = Strings.passwordSuccessfullySentMessage
+        successLabel.text = text
         successLabel.alpha = 0
-        
-        successLabel.translatesAutoresizingMaskIntoConstraints = false
-        let msgCenterX = successLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        let msgCenterY = successLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: Constants.successMsgYConstant)
-        let msgWidth = successLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1)
-        let msgConstraints = [msgCenterX, msgCenterY, msgWidth]
-        
-        view.addSubview(successLabel)
-        NSLayoutConstraint.activate(msgConstraints)
-        
-        UIView.animate(withDuration: AnimationConstants.successMsgFade, animations: {
-            successLabel.alpha = 1
-        }) { (complete) in
-            if complete {
-                UIView.animateKeyframes(
-                    withDuration: AnimationConstants.successMsgFade,
-                    delay: AnimationConstants.successMsgLinger, options: [],
-                    animations: {
-                        successLabel.alpha = 0
-                    },
-                    completion: { (complete) in
-                    if complete {
-                        NSLayoutConstraint.deactivate(msgConstraints)
-                        successLabel.removeFromSuperview()
-                    }
-                })
-            }
-        }
+        return successLabel
+    }
+    
+    private func createSuccessLabelConstraints(label: UILabel) -> [NSLayoutConstraint] {
+        label.translatesAutoresizingMaskIntoConstraints = false
+        let messageCenterX = label.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        let messageCenterY = label.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: Constants.successMessageYConstant)
+        let messageWidth = label.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1)
+        let messageConstraints = [messageCenterX, messageCenterY, messageWidth]
+        return messageConstraints
     }
 }
 
@@ -316,12 +335,12 @@ extension PasswordPusherViewController: UITextFieldDelegate {
                 displaySliderInfo()
             }
             deactivateConstraints(from: textField)
-            animateOffTxtField(textField)
+            animateOffTextField(textField)
         }
     }
     
-    private func animateOffTxtField(_ textField: UITextField) {
-        UIView.animate(withDuration: AnimationConstants.txtFieldFadeIn, animations: {
+    private func animateOffTextField(_ textField: UITextField) {
+        UIView.animate(withDuration: AnimationConstants.textFieldFadeIn, animations: {
             textField.alpha = 0
         }) { (complete) in
             if complete {
@@ -335,7 +354,6 @@ extension PasswordPusherViewController: UITextFieldDelegate {
         return true
     }
     
-    //called when view background is tapped
     @objc private func dismissKeyboard() {
         passwordTextField.resignFirstResponder()
         passwordExpirationTextField?.resignFirstResponder()
@@ -344,14 +362,14 @@ extension PasswordPusherViewController: UITextFieldDelegate {
 
 extension PasswordPusherViewController {
     private struct AnimationConstants {
-        static let txtFieldFadeIn: TimeInterval = 0.3
-        static let successMsgFade: TimeInterval = 0.5
-        static let successMsgLinger: TimeInterval = 1
+        static let textFieldFadeIn: TimeInterval = 0.3
+        static let successMessageFade: TimeInterval = 0.5
+        static let successMessageLinger: TimeInterval = 1
     }
     
     private struct Constants {
-        static let successMsgFontSize: CGFloat = 24
-        static let successMsgYConstant: CGFloat = -50
+        static let successMessageFontSize: CGFloat = 24
+        static let successMessageYConstant: CGFloat = -50
     }
     
     private struct URLs {
@@ -359,12 +377,13 @@ extension PasswordPusherViewController {
     }
     
     private struct Strings {
-        static let passwordSuccessfullySentMessage = "Your password has been sent!"
-        static let emailFailureMessage = "Mail could not be sent."
+        static let passwordSuccessfullySharedMessage = "Your password has been shared!"
+        static let passwordNotShared = "Password not shared."
         static let noPasswordError = "Please enter a password. It needs to have at least one character."
         static let onePasswordSearchError = "Password not retrieved from OnePassword"
+        static let invalidUrlErrorMessage = "String is not a valid URL."
     }
-    
+
     private enum TextFieldTag: Int {
         case daysToExpire = 1000
         case viewsToExpire = 1001
