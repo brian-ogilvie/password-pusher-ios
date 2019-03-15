@@ -17,7 +17,7 @@ import Foundation
 
 class PasswordPusherHandler {
     func handlePush(password: String, expireDays: Int, expireViews: Int, success: @escaping (_ url: String) -> Void, failure: @escaping (_ error: UrlSessionError) -> Void) {
-        guard let url = URL(string: URLs.arctouchAPI) else {
+        guard let url = URL(string: URLs.pwPushAPI) else {
             failure(UrlSessionError.urlCreationError)
             return
         }
@@ -43,7 +43,7 @@ class PasswordPusherHandler {
             guard let data = data else { failure(UrlSessionError.emptyDataInResponse); return }
             do {
                 let passwordPushObject = try JSONDecoder().decode(PasswordPushObject.self, from: data)
-                let urlToSend = URLs.arctouchPrefix + passwordPushObject.urlToken
+                let urlToSend = URLs.pwPushPrefix + passwordPushObject.urlToken
                 success(urlToSend)
             } catch {
                 failure(UrlSessionError.unknownSessionError)
@@ -55,10 +55,7 @@ class PasswordPusherHandler {
 extension PasswordPusherHandler {
     private struct URLs {
         static let pwPushAPI = "https://pwpush.com/p.json"
-        static let arctouchAPI = "https://pwpush.arctouch.com/passwords.json"
         static let pwPushPrefix = "https://pwpush.com/p/"
-        static let arctouchPrefix = "https://pwpush.arctouch.com/p/"
-        static let placeholder = "https://jsonplaceholder.typicode.com/todos/1/posts"
     }
     private struct Strings {
         static let noServerResponse = "Unable to get response from server."
