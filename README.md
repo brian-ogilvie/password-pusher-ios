@@ -6,7 +6,7 @@ This is a front-end application which interacts with the [pwPush API](https://pw
 
 ## To Use
 
-* You will need XCode installed on your computer to install this app on your device. 
+**You will need XCode installed on your computer to install this app on your device. 
 
 - Fork and clone this repository
 - Open the project file in XCode
