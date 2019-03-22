@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:SettingsScript.rb">
+   </FileRef>
+   <FileRef
       location = "self:PasswordPusher.xcodeproj">
    </FileRef>
 </Workspace>

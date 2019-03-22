@@ -18,6 +18,9 @@
 		857D484D216B77BB00C639FC /* PasswordPushObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D484C216B77BB00C639FC /* PasswordPushObject.swift */; };
 		8593F4C221A3E1B000909224 /* PasswordPusherSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8593F4C121A3E1B000909224 /* PasswordPusherSettingsManager.swift */; };
 		859CC0A02187A34700147320 /* SharePasswordActivityItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CC09F2187A34700147320 /* SharePasswordActivityItemProvider.swift */; };
+		85B76D862245346600228793 /* passwordPusher.isblicense in Resources */ = {isa = PBXBuildFile; fileRef = 85B76D842245346600228793 /* passwordPusher.isblicense */; };
+		85B76D872245346600228793 /* onePasword.isblicense in Resources */ = {isa = PBXBuildFile; fileRef = 85B76D852245346600228793 /* onePasword.isblicense */; };
+		85B76D892245356100228793 /* heading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B76D882245356100228793 /* heading.swift */; };
 		85BD7A5E21A3AA5C008D1A38 /* PasswordPusherHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BD7A5D21A3AA5C008D1A38 /* PasswordPusherHandler.swift */; };
 		85DF79B4216290CB008BA272 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85DF79B3216290CB008BA272 /* Colors.xcassets */; };
 		85F0E409215DC34500D01FD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F0E408215DC34500D01FD4 /* AppDelegate.swift */; };
@@ -39,6 +42,9 @@
 		857D484C216B77BB00C639FC /* PasswordPushObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordPushObject.swift; sourceTree = "<group>"; };
 		8593F4C121A3E1B000909224 /* PasswordPusherSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordPusherSettingsManager.swift; sourceTree = "<group>"; };
 		859CC09F2187A34700147320 /* SharePasswordActivityItemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePasswordActivityItemProvider.swift; sourceTree = "<group>"; };
+		85B76D842245346600228793 /* passwordPusher.isblicense */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = passwordPusher.isblicense; sourceTree = "<group>"; };
+		85B76D852245346600228793 /* onePasword.isblicense */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = onePasword.isblicense; sourceTree = "<group>"; };
+		85B76D882245356100228793 /* heading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = heading.swift; sourceTree = "<group>"; };
 		85BD7A5D21A3AA5C008D1A38 /* PasswordPusherHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordPusherHandler.swift; sourceTree = "<group>"; };
 		85DF79B3216290CB008BA272 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		85F0E405215DC34500D01FD4 /* PasswordPusher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PasswordPusher.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,9 +95,19 @@
 			path = OnePassword;
 			sourceTree = "<group>";
 		};
+		85B76D8322452CA900228793 /* licenses */ = {
+			isa = PBXGroup;
+			children = (
+				85B76D852245346600228793 /* onePasword.isblicense */,
+				85B76D842245346600228793 /* passwordPusher.isblicense */,
+			);
+			path = licenses;
+			sourceTree = "<group>";
+		};
 		85F0E3FC215DC34500D01FD4 = {
 			isa = PBXGroup;
 			children = (
+				85B76D8322452CA900228793 /* licenses */,
 				85F0E407215DC34500D01FD4 /* PasswordPusher */,
 				85F0E406215DC34500D01FD4 /* Products */,
 				851FF20C21685A4A0016462A /* PasswordPusher-Bridging-Header.h */,
@@ -111,6 +127,7 @@
 			children = (
 				85F0E40C215DC34500D01FD4 /* Main.storyboard */,
 				85F0E40A215DC34500D01FD4 /* PasswordPusherViewController.swift */,
+				85B76D882245356100228793 /* heading.swift */,
 				85272ADD21AD01ED00C31747 /* HttpParameters.swift */,
 				85272AE121AD1D0400C31747 /* OnePasswordHandler.swift */,
 				85BD7A5D21A3AA5C008D1A38 /* PasswordPusherHandler.swift */,
@@ -196,9 +213,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				851FF21121685A4C0016462A /* 1Password.xcassets in Resources */,
+				85B76D862245346600228793 /* passwordPusher.isblicense in Resources */,
 				8569DE0A2173870E008E1EBB /* BigCaslon.ttf in Resources */,
 				85F0E413215DC34A00D01FD4 /* LaunchScreen.storyboard in Resources */,
 				85DF79B4216290CB008BA272 /* Colors.xcassets in Resources */,
+				85B76D872245346600228793 /* onePasword.isblicense in Resources */,
 				85F0E410215DC34A00D01FD4 /* Assets.xcassets in Resources */,
 				85F0E40E215DC34500D01FD4 /* Main.storyboard in Resources */,
 			);
@@ -215,6 +234,7 @@
 				859CC0A02187A34700147320 /* SharePasswordActivityItemProvider.swift in Sources */,
 				8593F4C221A3E1B000909224 /* PasswordPusherSettingsManager.swift in Sources */,
 				85BD7A5E21A3AA5C008D1A38 /* PasswordPusherHandler.swift in Sources */,
+				85B76D892245356100228793 /* heading.swift in Sources */,
 				85272AE021AD104800C31747 /* UrlSessionError.swift in Sources */,
 				85272AE221AD1D0400C31747 /* OnePasswordHandler.swift in Sources */,
 				85272ADE21AD01ED00C31747 /* HttpParameters.swift in Sources */,
@@ -222,7 +242,6 @@
 				857D484D216B77BB00C639FC /* PasswordPushObject.swift in Sources */,
 				8542AC6E216317EB002845CF /* Utilities.swift in Sources */,
 				85F0E409215DC34500D01FD4 /* AppDelegate.swift in Sources */,
-				85272AE921AF058900C31747 /* PwPushViewController+MessageUI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
