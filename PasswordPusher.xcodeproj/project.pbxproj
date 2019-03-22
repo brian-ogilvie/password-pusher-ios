@@ -21,6 +21,7 @@
 		85B76D862245346600228793 /* passwordPusher.isblicense in Resources */ = {isa = PBXBuildFile; fileRef = 85B76D842245346600228793 /* passwordPusher.isblicense */; };
 		85B76D872245346600228793 /* onePasword.isblicense in Resources */ = {isa = PBXBuildFile; fileRef = 85B76D852245346600228793 /* onePasword.isblicense */; };
 		85B76D892245356100228793 /* heading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B76D882245356100228793 /* heading.swift */; };
+		85B76D8B22453ED100228793 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 85B76D8A22453ED100228793 /* Settings.bundle */; };
 		85BD7A5E21A3AA5C008D1A38 /* PasswordPusherHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BD7A5D21A3AA5C008D1A38 /* PasswordPusherHandler.swift */; };
 		85DF79B4216290CB008BA272 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85DF79B3216290CB008BA272 /* Colors.xcassets */; };
 		85F0E409215DC34500D01FD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F0E408215DC34500D01FD4 /* AppDelegate.swift */; };
@@ -45,6 +46,7 @@
 		85B76D842245346600228793 /* passwordPusher.isblicense */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = passwordPusher.isblicense; sourceTree = "<group>"; };
 		85B76D852245346600228793 /* onePasword.isblicense */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = onePasword.isblicense; sourceTree = "<group>"; };
 		85B76D882245356100228793 /* heading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = heading.swift; sourceTree = "<group>"; };
+		85B76D8A22453ED100228793 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		85BD7A5D21A3AA5C008D1A38 /* PasswordPusherHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordPusherHandler.swift; sourceTree = "<group>"; };
 		85DF79B3216290CB008BA272 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		85F0E405215DC34500D01FD4 /* PasswordPusher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PasswordPusher.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,6 +109,7 @@
 		85F0E3FC215DC34500D01FD4 = {
 			isa = PBXGroup;
 			children = (
+				85B76D8A22453ED100228793 /* Settings.bundle */,
 				85B76D8322452CA900228793 /* licenses */,
 				85F0E407215DC34500D01FD4 /* PasswordPusher */,
 				85F0E406215DC34500D01FD4 /* Products */,
@@ -219,6 +222,7 @@
 				85DF79B4216290CB008BA272 /* Colors.xcassets in Resources */,
 				85B76D872245346600228793 /* onePasword.isblicense in Resources */,
 				85F0E410215DC34A00D01FD4 /* Assets.xcassets in Resources */,
+				85B76D8B22453ED100228793 /* Settings.bundle in Resources */,
 				85F0E40E215DC34500D01FD4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -395,7 +399,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.arctouch.passwordpusher;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brianogilviedesigns.passwordpusher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PasswordPusher-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -416,7 +420,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.arctouch.passwordpusher;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brianogilviedesigns.passwordpusher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PasswordPusher-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
