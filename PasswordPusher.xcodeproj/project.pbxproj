@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		026722DA2827DBAA4358912C /* Pods_PasswordPusher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62C0A8E169EF2DCEB02BC46D /* Pods_PasswordPusher.framework */; };
 		851FF21021685A4C0016462A /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 851FF20E21685A4B0016462A /* OnePasswordExtension.m */; };
 		851FF21121685A4C0016462A /* 1Password.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 851FF20F21685A4C0016462A /* 1Password.xcassets */; };
 		85272ADE21AD01ED00C31747 /* HttpParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85272ADD21AD01ED00C31747 /* HttpParameters.swift */; };
 		85272AE021AD104800C31747 /* UrlSessionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85272ADF21AD104800C31747 /* UrlSessionError.swift */; };
 		85272AE221AD1D0400C31747 /* OnePasswordHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85272AE121AD1D0400C31747 /* OnePasswordHandler.swift */; };
 		85272AE721AEE44200C31747 /* PasswordPusherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F0E40A215DC34500D01FD4 /* PasswordPusherViewController.swift */; };
+		853069662246BD0B003E3CAB /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 853069652246BD0B003E3CAB /* Podfile */; };
 		8542AC6E216317EB002845CF /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8542AC6D216317EB002845CF /* Utilities.swift */; };
 		8569DE0A2173870E008E1EBB /* BigCaslon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8569DE092173870E008E1EBB /* BigCaslon.ttf */; };
 		857D484D216B77BB00C639FC /* PasswordPushObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D484C216B77BB00C639FC /* PasswordPushObject.swift */; };
@@ -31,6 +33,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E36742EE199F344CCCDC430 /* Pods-PasswordPusher.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PasswordPusher.debug.xcconfig"; path = "Target Support Files/Pods-PasswordPusher/Pods-PasswordPusher.debug.xcconfig"; sourceTree = "<group>"; };
+		62C0A8E169EF2DCEB02BC46D /* Pods_PasswordPusher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PasswordPusher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		77A264461E24DCE0878BE9CB /* Pods-PasswordPusher.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PasswordPusher.release.xcconfig"; path = "Target Support Files/Pods-PasswordPusher/Pods-PasswordPusher.release.xcconfig"; sourceTree = "<group>"; };
 		851FF20C21685A4A0016462A /* PasswordPusher-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PasswordPusher-Bridging-Header.h"; sourceTree = "<group>"; };
 		851FF20D21685A4B0016462A /* OnePasswordExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnePasswordExtension.h; sourceTree = "<group>"; };
 		851FF20E21685A4B0016462A /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
@@ -38,6 +43,7 @@
 		85272ADD21AD01ED00C31747 /* HttpParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpParameters.swift; sourceTree = "<group>"; };
 		85272ADF21AD104800C31747 /* UrlSessionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UrlSessionError.swift; sourceTree = "<group>"; };
 		85272AE121AD1D0400C31747 /* OnePasswordHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnePasswordHandler.swift; sourceTree = "<group>"; };
+		853069652246BD0B003E3CAB /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		8542AC6D216317EB002845CF /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		8569DE092173870E008E1EBB /* BigCaslon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BigCaslon.ttf; sourceTree = "<group>"; };
 		857D484C216B77BB00C639FC /* PasswordPushObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordPushObject.swift; sourceTree = "<group>"; };
@@ -63,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				026722DA2827DBAA4358912C /* Pods_PasswordPusher.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,11 +116,14 @@
 		85F0E3FC215DC34500D01FD4 = {
 			isa = PBXGroup;
 			children = (
+				853069652246BD0B003E3CAB /* Podfile */,
 				85B76D8A22453ED100228793 /* Settings.bundle */,
 				85B76D8322452CA900228793 /* licenses */,
 				85F0E407215DC34500D01FD4 /* PasswordPusher */,
 				85F0E406215DC34500D01FD4 /* Products */,
 				851FF20C21685A4A0016462A /* PasswordPusher-Bridging-Header.h */,
+				97A502FFA015C04B207AF9D4 /* Pods */,
+				C0490009772EEBAE8F1FB66D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -156,6 +166,23 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		97A502FFA015C04B207AF9D4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3E36742EE199F344CCCDC430 /* Pods-PasswordPusher.debug.xcconfig */,
+				77A264461E24DCE0878BE9CB /* Pods-PasswordPusher.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		C0490009772EEBAE8F1FB66D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				62C0A8E169EF2DCEB02BC46D /* Pods_PasswordPusher.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -163,9 +190,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 85F0E417215DC34A00D01FD4 /* Build configuration list for PBXNativeTarget "PasswordPusher" */;
 			buildPhases = (
+				81EE0982666D929A868F37DE /* [CP] Check Pods Manifest.lock */,
 				85F0E401215DC34500D01FD4 /* Sources */,
 				85F0E402215DC34500D01FD4 /* Frameworks */,
 				85F0E403215DC34500D01FD4 /* Resources */,
+				CA7F258B0B6105973693791D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -215,6 +244,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				853069662246BD0B003E3CAB /* Podfile in Resources */,
 				851FF21121685A4C0016462A /* 1Password.xcassets in Resources */,
 				85B76D862245346600228793 /* passwordPusher.isblicense in Resources */,
 				8569DE0A2173870E008E1EBB /* BigCaslon.ttf in Resources */,
@@ -228,6 +258,53 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		81EE0982666D929A868F37DE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PasswordPusher-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA7F258B0B6105973693791D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PasswordPusher/Pods-PasswordPusher-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Mixpanel-swift/Mixpanel.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mixpanel.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PasswordPusher/Pods-PasswordPusher-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		85F0E401215DC34500D01FD4 /* Sources */ = {
@@ -389,12 +466,14 @@
 		};
 		85F0E418215DC34A00D01FD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3E36742EE199F344CCCDC430 /* Pods-PasswordPusher.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M49Q787GTR;
 				INFOPLIST_FILE = "PasswordPusher/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -410,12 +489,14 @@
 		};
 		85F0E419215DC34A00D01FD4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 77A264461E24DCE0878BE9CB /* Pods-PasswordPusher.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M49Q787GTR;
 				INFOPLIST_FILE = "PasswordPusher/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

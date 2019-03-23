@@ -1,0 +1,18 @@
+PODS:
+  - Mixpanel-swift (2.5.9):
+    - Mixpanel-swift/Complete (= 2.5.9)
+  - Mixpanel-swift/Complete (2.5.9)
+
+DEPENDENCIES:
+  - Mixpanel-swift
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Mixpanel-swift
+
+SPEC CHECKSUMS:
+  Mixpanel-swift: 4a2e061c8b7a5000ed7f72d2a6196884b5de8b49
+
+PODFILE CHECKSUM: eab6fdae5d884cbfa23805bb7738aabc8cc5ecbc
+
+COCOAPODS: 1.6.1
