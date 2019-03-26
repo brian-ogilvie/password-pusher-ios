@@ -18,3 +18,7 @@ This is a front-end application which interacts with the [pwPush API](https://pw
 - Select your device as the build target
 - Run the app
 - Hack On!
+
+## Licencing
+
+Any recreation of the code contained in this repository or reuse of artwork assets requires the express written consent of Brian Ogilvie.
